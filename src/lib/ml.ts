@@ -50,23 +50,24 @@ export function stdDev(arr: number[]) {
 // Predict next 7 days
 export function predict7(avgs: number[]) {
   if (avgs.length < 3) return Array(7).fill(avgs[avgs.length - 1] || 0);
-  const reg = linReg(avgs.slice(-30));
-  const n = avgs.length;
+  const sliceLen = Math.min(30, avgs.length);
+  const reg = linReg(avgs.slice(-sliceLen));
   return Array.from({ length: 7 }, (_, i) => {
     const wmaV = wma(avgs, 7);
     const ewmV = ewm(avgs, 0.3);
-    return Math.round(wmaV * 0.40 + reg.pred(n + i) * 0.35 + ewmV * 0.25);
+    return Math.round(wmaV * 0.40 + reg.pred(sliceLen + i) * 0.35 + ewmV * 0.25);
   });
 }
 
 // Predict T+1 with detailed stats
 export function predictStats(avgs: number[], ahead = 1) {
   if (avgs.length < 3) return { pred: avgs.slice(-1)[0] || 0, std: 0, ma7: 0, ma14: 0, slope: 0, conf: 60 };
-  const reg = linReg(avgs.slice(-30));
+  const sliceLen = Math.min(30, avgs.length);
+  const reg = linReg(avgs.slice(-sliceLen));
   const wmaV = wma(avgs, 7);
   const smaV = sma(avgs, 14);
   const ewmV = ewm(avgs, 0.3);
-  const ens = wmaV * 0.40 + reg.pred(avgs.length - 1 + ahead) * 0.35 + ewmV * 0.25;
+  const ens = wmaV * 0.40 + reg.pred(sliceLen - 1 + ahead) * 0.35 + ewmV * 0.25;
   const s = stdDev(avgs.slice(-14));
   const conf = Math.min(95, 68 + Math.floor(avgs.length / 4));
   return { pred: Math.round(ens), std: Math.round(s), ma7: Math.round(wmaV), ma14: Math.round(smaV), slope: reg.slope, conf };
