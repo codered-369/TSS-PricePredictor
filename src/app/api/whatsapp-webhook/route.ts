@@ -16,9 +16,13 @@ function parseWhatsAppMessage(text: string) {
     dateStr = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getFullYear()).slice(2)}`;
   }
 
+  // Isolate the TSS Sirsi block specifically to avoid Yallapura/Siddapura rates
+  const sirsiMatch = text.match(/TSS Sirsi_?\*(.*?)(\*Total Sales|_TSS Yallapura|_TSS Siddapura)/is);
+  const sirsiText = sirsiMatch ? sirsiMatch[1] : text; // Fallback to full text
+
   // Helper to extract Min, Max, Avg from a line
   const extractNumbers = (regex: RegExp) => {
-    const match = text.match(regex);
+    const match = sirsiText.match(regex);
     if (match) {
       return { 
         n: parseInt(match[1]) || 0, // Min
