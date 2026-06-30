@@ -34,7 +34,7 @@ export default function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(''); // Format: YYYY-MM-DD for the input
   const [showManualModal, setShowManualModal] = useState(false);
   const [visitors, setVisitors] = useState<number | null>(null);
-  
+
   const todayForInput = new Date();
   const [manualData, setManualData] = useState({
     d: `${String(todayForInput.getDate()).padStart(2, '0')}-${String(todayForInput.getMonth() + 1).padStart(2, '0')}-${String(todayForInput.getFullYear()).slice(2)}`,
@@ -62,13 +62,13 @@ export default function Dashboard() {
       const res = await fetch('/api/data');
       const json = await res.json();
       const loadedData = json.data;
-      
+
       // Automatic Daily Fetch Check
       if (loadedData && loadedData.length > 0) {
         const lastEntry = loadedData[loadedData.length - 1];
         const today = new Date();
         const d = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getFullYear()).slice(2)}`;
-        
+
         if (lastEntry.d !== d) {
           // If we don't have today's data yet, automatically fetch it in the background!
           fetch('/api/fetch-prices').then(() => {
@@ -77,7 +77,7 @@ export default function Dashboard() {
           });
         }
       }
-      
+
       setData(loadedData);
       if (loadedData.length > 0) {
         setSelectedDate(parseToInputDate(loadedData[loadedData.length - 1].d));
@@ -119,13 +119,13 @@ export default function Dashboard() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(manualData)
       });
-      
+
       const result = await res.json();
       if (!res.ok) {
         alert(result.error || 'Failed to save data');
         return;
       }
-      
+
       await loadData();
       setShowManualModal(false);
     } catch (e) {
@@ -142,7 +142,7 @@ export default function Dashboard() {
   const itemDef = ITEMS[activeItem as keyof typeof ITEMS];
   const avgs = data.map((d) => d[itemDef.avgKey] || 0);
   const labels = data.map((d) => d.d);
-  
+
   const latestAvg = avgs[avgs.length - 1];
   const prevAvg = avgs[avgs.length - 2] || latestAvg;
   const pctChange = (((latestAvg - prevAvg) / prevAvg) * 100).toFixed(1);
@@ -151,12 +151,12 @@ export default function Dashboard() {
   // Predictions
   const p7 = predict7(avgs);
   const stats = predictStats(avgs);
-  
+
   // Actionable Insight logic
   const peakPrice = Math.max(...p7);
   const peakIndex = p7.indexOf(peakPrice);
   const currentDiffToPeak = peakPrice - latestAvg;
-  
+
   // Future dates
   const today = new Date();
   const futureLabels = Array.from({ length: 7 }, (_, i) => {
@@ -167,7 +167,7 @@ export default function Dashboard() {
 
   let actionText = '';
   let actionType = 'wait';
-  
+
   if (currentDiffToPeak > 500 && peakIndex > 1) {
     actionText = `Hold your crop! Prices are expected to peak at ₹${peakPrice.toLocaleString()} on ${futureLabels[peakIndex]}. Send your product to market then.`;
     actionType = 'wait';
@@ -246,17 +246,17 @@ export default function Dashboard() {
             <RefreshCw size={18} className={syncing ? 'spin' : ''} />
             {syncing ? 'Fetching...' : 'Fetch Napanta Rates'}
           </button>
-          
+
           <button className={styles.syncBtn} onClick={() => setShowManualModal(true)} style={{ background: 'var(--accent-green)' }}>
             <Plus size={18} />
             Add Manual Entry
           </button>
-          
+
           <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <h3 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '4px' }}>Commodity</h3>
             {Object.entries(ITEMS).map(([key, item]) => (
-              <button 
-                key={key} 
+              <button
+                key={key}
                 className={`${styles.commodityBtn} ${activeItem === key ? styles.active : ''}`}
                 onClick={() => setActiveItem(key)}
               >
@@ -267,9 +267,9 @@ export default function Dashboard() {
 
           <div style={{ marginTop: '2rem' }}>
             <h3 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Historical Date</h3>
-            <input 
-              type="date" 
-              className={styles.datePicker} 
+            <input
+              type="date"
+              className={styles.datePicker}
               style={{ width: '100%' }}
               value={selectedDate}
               onChange={(e) => setSelectedDate(e.target.value)}
@@ -281,14 +281,14 @@ export default function Dashboard() {
 
         {/* Main Content */}
         <main className={styles.mainContent}>
-          
+
           {/* KPI Grid */}
           <div className={styles.kpiGrid}>
             <div className={`${styles.kpiCard} glass`}>
               <div className={styles.kpiLabel}>Current Price</div>
               <div className={styles.kpiValue}>₹{latestAvg.toLocaleString()}</div>
               <div className={`${styles.kpiSub} ${isUp ? styles.up : styles.down}`}>
-                {isUp ? <TrendingUp size={14} style={{display:'inline', verticalAlign:'middle'}}/> : <TrendingDown size={14} style={{display:'inline', verticalAlign:'middle'}}/>}
+                {isUp ? <TrendingUp size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /> : <TrendingDown size={14} style={{ display: 'inline', verticalAlign: 'middle' }} />}
                 {' '}{Math.abs(Number(pctChange))}% vs yesterday
               </div>
             </div>
@@ -347,7 +347,7 @@ export default function Dashboard() {
             {(() => {
               const internalDate = parseToInternalDate(selectedDate);
               const dayData = data.find(d => d.d === internalDate);
-              
+
               if (!dayData) {
                 return <div style={{ color: 'var(--text-muted)', padding: '1rem', textAlign: 'center' }}>
                   No market data available for this date.
@@ -381,7 +381,7 @@ export default function Dashboard() {
           </div>
         </aside>
       </div>
-      
+
       {showManualModal && (
         <div className={styles.modalOverlay}>
           <div className={styles.modalContent}>
@@ -389,24 +389,24 @@ export default function Dashboard() {
               <h2 style={{ fontSize: '1.5rem' }}>Add Manual Market Rates</h2>
               <button onClick={() => setShowManualModal(false)} style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer', fontSize: '1.5rem' }}>×</button>
             </div>
-            
+
             <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem' }}>
               <div style={{ flex: 1 }}>
                 <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>Date (DD-MM-YY)</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   value={manualData.d}
-                  onChange={e => setManualData({...manualData, d: e.target.value})}
+                  onChange={e => setManualData({ ...manualData, d: e.target.value })}
                   style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', color: 'white', padding: '0.75rem', borderRadius: '6px', width: '100%' }}
                 />
               </div>
               <div style={{ flex: 1 }}>
                 <label style={{ display: 'block', marginBottom: '0.5rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>Admin Secret Password</label>
-                <input 
-                  type="password" 
+                <input
+                  type="password"
                   placeholder="Enter secret to allow save..."
                   value={manualData.secret}
-                  onChange={e => setManualData({...manualData, secret: e.target.value})}
+                  onChange={e => setManualData({ ...manualData, secret: e.target.value })}
                   style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', color: 'white', padding: '0.75rem', borderRadius: '6px', width: '100%' }}
                 />
               </div>
@@ -418,15 +418,15 @@ export default function Dashboard() {
                 <div className={styles.formGrid}>
                   <div className={styles.formGroup}>
                     <label>Minimum Price</label>
-                    <input type="number" onChange={e => setManualData({...manualData, [item.minKey]: parseInt(e.target.value) || 0})} />
+                    <input type="number" onChange={e => setManualData({ ...manualData, [item.minKey]: parseInt(e.target.value) || 0 })} />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Average Price</label>
-                    <input type="number" onChange={e => setManualData({...manualData, [item.avgKey]: parseInt(e.target.value) || 0})} />
+                    <input type="number" onChange={e => setManualData({ ...manualData, [item.avgKey]: parseInt(e.target.value) || 0 })} />
                   </div>
                   <div className={styles.formGroup}>
                     <label>Maximum Price</label>
-                    <input type="number" onChange={e => setManualData({...manualData, [item.maxKey]: parseInt(e.target.value) || 0})} />
+                    <input type="number" onChange={e => setManualData({ ...manualData, [item.maxKey]: parseInt(e.target.value) || 0 })} />
                   </div>
                 </div>
               </div>
@@ -449,7 +449,7 @@ export default function Dashboard() {
           </div>
         ) : <div />}
         <div>
-          © {new Date().getFullYear()} NammaUK
+          © {new Date().getFullYear()} TSS Price Predictor
         </div>
       </footer>
 
