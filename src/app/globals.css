@@ -46,3 +46,16 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+
+body.light-mode {
+  --bg-color: #f1f5f9;
+  --glass-bg: rgba(255, 255, 255, 0.75);
+  --glass-border: rgba(0, 0, 0, 0.1);
+  --text-main: #0f172a;
+  --text-muted: #475569;
+  --accent-green-bg: rgba(16, 185, 129, 0.2);
+  --accent-red-bg: rgba(239, 68, 68, 0.2);
+}
+body.light-mode .glass {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
