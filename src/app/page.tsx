@@ -13,7 +13,7 @@ import {
   Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { TrendingUp, TrendingDown, AlertCircle, RefreshCw, CalendarDays, CheckCircle, Plus } from 'lucide-react';
+import { TrendingUp, TrendingDown, AlertCircle, RefreshCw, CalendarDays, CheckCircle, Plus, Eye } from 'lucide-react';
 import styles from './page.module.css';
 import { predict7, predictStats } from '@/lib/ml';
 
@@ -33,6 +33,7 @@ export default function Dashboard() {
   const [syncing, setSyncing] = useState(false);
   const [selectedDate, setSelectedDate] = useState(''); // Format: YYYY-MM-DD for the input
   const [showManualModal, setShowManualModal] = useState(false);
+  const [visitors, setVisitors] = useState<number | null>(null);
   
   const todayForInput = new Date();
   const [manualData, setManualData] = useState({
@@ -90,6 +91,11 @@ export default function Dashboard() {
 
   useEffect(() => {
     loadData();
+    // Fetch visitor count
+    fetch('/api/visitors')
+      .then(res => res.json())
+      .then(data => setVisitors(data.count))
+      .catch(e => console.error(e));
   }, []);
 
   const syncPrices = async () => {
@@ -433,6 +439,19 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Footer */}
+      <footer style={{ marginTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 0', borderTop: '1px solid rgba(255,255,255,0.05)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+        {visitors !== null ? (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: '#0ea5e9', color: 'white', padding: '0.3rem 0.8rem', borderRadius: '999px', fontWeight: 'bold', boxShadow: '0 4px 12px rgba(14, 165, 233, 0.25)' }}>
+            <Eye size={14} />
+            {visitors}
+          </div>
+        ) : <div />}
+        <div>
+          © {new Date().getFullYear()} NammaUK
+        </div>
+      </footer>
 
       <style jsx global>{`
         .spin { animation: spin 1s linear infinite; }
