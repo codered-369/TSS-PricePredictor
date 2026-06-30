@@ -117,6 +117,10 @@ export default function Dashboard() {
   const [lang, setLang] = useState<'en'|'kn'>('en');
   const [theme, setTheme] = useState<'dark'|'light'>('dark');
 
+  // PWA Install Prompt State
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [showInstallPopup, setShowInstallPopup] = useState(false);
+
   const t = TRANSLATIONS[lang];
 
   const todayForInput = new Date();
@@ -181,7 +185,7 @@ export default function Dashboard() {
       .then(data => setVisitors(data.count))
       .catch(e => console.error(e));
       
-    // Load preferences
+      // Load preferences
     const savedLang = localStorage.getItem('tss_lang') as 'en'|'kn';
     if (savedLang) setLang(savedLang);
     const savedTheme = localStorage.getItem('tss_theme') as 'dark'|'light';
@@ -189,6 +193,20 @@ export default function Dashboard() {
       setTheme(savedTheme);
       document.body.classList.toggle('light-mode', savedTheme === 'light');
     }
+
+    // PWA Install Event Listener
+    const handleBeforeInstallPrompt = (e: any) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      if (!localStorage.getItem('tss_install_dismissed')) {
+        setShowInstallPopup(true);
+      }
+    };
+    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+    };
   }, []);
 
   const toggleLang = () => {
@@ -202,6 +220,20 @@ export default function Dashboard() {
     setTheme(newTheme);
     localStorage.setItem('tss_theme', newTheme);
     document.body.classList.toggle('light-mode', newTheme === 'light');
+  };
+
+  const handleInstallClick = async () => {
+    if (!deferredPrompt) return;
+    setShowInstallPopup(false);
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    console.log(`User ${outcome} the install prompt`);
+    setDeferredPrompt(null);
+  };
+
+  const handleDismissInstall = () => {
+    setShowInstallPopup(false);
+    localStorage.setItem('tss_install_dismissed', 'true');
   };
 
   const scrollToRates = () => {
@@ -603,6 +635,37 @@ export default function Dashboard() {
           <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>© {new Date().getFullYear()} TSS Price Predictor</span>
         </div>
       </footer>
+
+      {/* PWA Install Popup */}
+      {showInstallPopup && (
+        <div style={{
+          position: 'fixed',
+          bottom: '20px',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          background: 'var(--glass-bg)',
+          border: '1px solid var(--accent-green)',
+          padding: '1.25rem',
+          borderRadius: '16px',
+          boxShadow: '0 10px 40px rgba(0,0,0,0.5)',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          zIndex: 9999,
+          width: '90%',
+          maxWidth: '380px',
+          backdropFilter: 'blur(20px)'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <h3 style={{ margin: 0, fontSize: '1.1rem', color: 'var(--text-main)' }}>Install TSS Predictor</h3>
+            <button onClick={handleDismissInstall} style={{ background: 'transparent', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: '1.5rem', lineHeight: '1rem' }}>×</button>
+          </div>
+          <p style={{ margin: 0, color: 'var(--text-muted)', fontSize: '0.9rem', lineHeight: '1.4' }}>Add this app to your home screen for quick, one-tap access to daily market rates and AI forecasts.</p>
+          <button onClick={handleInstallClick} style={{ background: 'var(--accent-green)', color: 'white', border: 'none', padding: '0.85rem', borderRadius: '10px', fontWeight: '700', cursor: 'pointer', fontSize: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginTop: '0.5rem' }}>
+            <Plus size={20} /> Add to Home Screen
+          </button>
+        </div>
+      )}
 
       <style jsx global>{`
         .spin { animation: spin 1s linear infinite; }
