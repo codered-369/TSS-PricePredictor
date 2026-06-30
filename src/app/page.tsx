@@ -566,21 +566,33 @@ export default function Dashboard() {
       )}
 
       {/* Footer */}
-      <footer style={{ marginTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 0', borderTop: '1px solid var(--glass-border)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
+      <footer style={{ marginTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 0', borderTop: '1px solid var(--glass-border)', color: 'var(--text-muted)', fontSize: '0.85rem', flexWrap: 'wrap', gap: '1rem' }}>
         {visitors !== null ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.4rem 0.8rem', borderRadius: '8px', fontWeight: '500', backdropFilter: 'blur(12px)' }}>
             <Eye size={16} />
             {visitors}
           </div>
         ) : <div />}
-        <div>
-          © {new Date().getFullYear()} TSS Price Predictor
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
+          <span>© {new Date().getFullYear()} TSS Price Predictor</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+            Made with <span className="heartBeat" style={{ color: '#ef4444', display: 'inline-block', fontSize: '1rem' }}>❤️</span> By Vishwa
+          </span>
         </div>
       </footer>
 
       <style jsx global>{`
         .spin { animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .heartBeat { animation: heartBeat 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1); }
+        @keyframes heartBeat {
+          0% { transform: scale(1); }
+          15% { transform: scale(1.3); }
+          30% { transform: scale(1); }
+          45% { transform: scale(1.3); }
+          60% { transform: scale(1); }
+        }
       `}</style>
     </div>
   );
