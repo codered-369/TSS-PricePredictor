@@ -2,7 +2,6 @@
 
 A modern, cloud-native web application designed to help farmers in the Sirsi region track live APMC market rates, predict future price trends using Machine Learning, and make data-driven decisions on when to sell their crops.
 
-![App Preview](https://tss-price-predictor.vercel.app/)
 
 ## ✨ Core Features
 
