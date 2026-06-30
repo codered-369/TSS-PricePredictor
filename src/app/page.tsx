@@ -328,15 +328,17 @@ export default function Dashboard() {
 
   return (
     <div className={styles.container}>
-      <header className={styles.header} style={{ position: 'relative' }}>
-        <div style={{ position: 'absolute', top: 0, right: 0, display: 'flex', gap: '0.5rem' }}>
-          <button onClick={toggleLang} style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', color: 'var(--text-main)', padding: '0.5rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-            <Languages size={18} /> {lang === 'en' ? 'ಕನ್ನಡ' : 'English'}
-          </button>
-          <button onClick={toggleTheme} style={{ background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', color: 'var(--text-main)', padding: '0.5rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-        </div>
+      {/* Top Bar for Toggles */}
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginBottom: '1rem', width: '100%' }}>
+        <button onClick={toggleLang} style={{ background: '#0ea5e9', color: 'white', border: 'none', padding: '0.4rem 1rem', borderRadius: '999px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 'bold', boxShadow: '0 4px 12px rgba(14, 165, 233, 0.25)', fontSize: '0.85rem' }}>
+          <Languages size={16} /> {lang === 'en' ? 'ಕನ್ನಡ' : 'English'}
+        </button>
+        <button onClick={toggleTheme} style={{ background: '#0ea5e9', color: 'white', border: 'none', padding: '0.4rem', width: '32px', height: '32px', borderRadius: '999px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(14, 165, 233, 0.25)' }}>
+          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+        </button>
+      </div>
+
+      <header className={styles.header}>
         <h1 className={styles.textGradient}>{t.title}</h1>
         <p>{t.subtitle}</p>
       </header>
