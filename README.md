@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌱 TSS Sirsi Arecanut Price Predictor
 
-## Getting Started
+A modern, cloud-native web application designed to help farmers in the Sirsi region track live APMC market rates, predict future price trends using Machine Learning, and make data-driven decisions on when to sell their crops.
 
-First, run the development server:
+![App Preview](https://tss-price-predictor.vercel.app/favicon.ico)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## ✨ Core Features
+
+*   **📊 Live Market Tracking:** Accurate daily tracking of Min, Max, and Average prices for Rashi, Kempu Gotu (K.G.), Chali Kempu (Ch. K), and Pepper.
+*   **🤖 AI-Powered Predictions:** Uses a custom Linear Regression and Exponential Weighted Moving Average (EWMA) model to generate a 7-day future price forecast.
+*   **💡 Actionable Insights:** Automatically analyzes market volatility and trend slopes to advise farmers whether to **Hold** for a peak or **Sell** before a drop.
+*   **📱 WhatsApp Automation:** Integrates with Twilio Webhooks. The admin simply forwards the daily TSS WhatsApp message to a bot, which parses the text and updates the cloud database instantly.
+*   **🌍 Localization:** Full Kannada and English language support, toggleable instantly.
+*   **🌗 Adaptive Glassmorphism UI:** A premium, responsive interface featuring light/dark modes and a mobile-optimized layout.
+*   **👀 Live Visitor Tracking:** A stateless, Redis-backed counter that tracks total dashboard visits.
+
+## 🛠 Tech Stack
+
+*   **Frontend:** Next.js (App Router), React, TypeScript, Chart.js (react-chartjs-2)
+*   **Styling:** Vanilla CSS (CSS Modules) featuring a custom Glassmorphism aesthetic.
+*   **Database:** Vercel KV / Upstash Redis for serverless data persistence.
+*   **Hosting:** Vercel
+
+## 🚀 Getting Started
+
+### 1. Environment Setup
+Create a `.env.local` file in the root directory and add the following keys:
+```env
+# Upstash Redis / Vercel KV Credentials
+KV_REST_API_URL="your_redis_url"
+KV_REST_API_TOKEN="your_redis_token"
+
+# Admin Security
+ADMIN_SECRET="your_custom_password"
+ALLOWED_WHATSAPP_NUMBER="+919876543210" # Your phone number with country code
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Local Development
+```bash
+npm install
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🤖 WhatsApp Bot Setup (Twilio)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To automate daily data entry without writing a single line of code:
+1. Create a free **Twilio Sandbox for WhatsApp** account.
+2. Set your Sandbox webhook URL to: `https://your-domain.vercel.app/api/whatsapp-webhook`
+3. Ensure the HTTP method is set to **POST**.
+4. Forward the daily APMC text message from your personal WhatsApp to your Twilio Bot number. The system will automatically parse the Sirsi block and update the Redis database.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📜 License
+Developed for the farming community. © 2026 TSS Price Predictor.
