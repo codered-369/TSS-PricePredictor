@@ -1,0 +1,16 @@
+{
+  "name": "TSS Sirsi Smart Predictor",
+  "short_name": "TSS Predictor",
+  "description": "Advanced 7-Day Market Intelligence for Arecanut Farmers",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    }
+  ]
+}

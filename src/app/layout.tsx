@@ -29,6 +29,7 @@ export const metadata: Metadata = {
     description: "Daily market rates and AI predictions for Sirsi Arecanut farmers.",
   },
   robots: "index, follow",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
