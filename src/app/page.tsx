@@ -202,6 +202,10 @@ export default function Dashboard() {
     document.body.classList.toggle('light-mode', newTheme === 'light');
   };
 
+  const scrollToRates = () => {
+    document.getElementById('today-rates')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const syncPrices = async () => {
     setSyncing(true);
     try {
@@ -354,6 +358,10 @@ export default function Dashboard() {
         </div>
       </div>
 
+      <button className={styles.mobileJumpBtn} onClick={scrollToRates}>
+        {t.marketRatesFor} {selectedDate || ''} ↓
+      </button>
+
       <div className={styles.grid}>
         {/* Sidebar */}
         <aside className={styles.sidebar}>
@@ -453,7 +461,7 @@ export default function Dashboard() {
         </main>
 
         {/* Right Sidebar */}
-        <aside className={styles.rightSidebar}>
+        <aside id="today-rates" className={styles.rightSidebar}>
           {/* Today's / Selected Date Prices for All Items */}
           <div className={`${styles.chartCard} glass`} style={{ minHeight: 'auto', background: 'var(--accent-blue-bg, rgba(59, 130, 246, 0.05))', borderColor: 'rgba(59, 130, 246, 0.2)' }}>
             <div className={styles.chartHeader} style={{ marginBottom: '1rem' }}>
