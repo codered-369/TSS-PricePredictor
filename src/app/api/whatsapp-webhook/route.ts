@@ -17,7 +17,7 @@ function parseWhatsAppMessage(text: string) {
   }
 
   // Isolate the TSS Sirsi block specifically to avoid Yallapura/Siddapura rates
-  const sirsiMatch = text.match(/TSS Sirsi_?\*(.*?)(\*Total Sales|_TSS Yallapura|_TSS Siddapura)/is);
+  const sirsiMatch = text.match(/TSS Sirsi_?\*([\s\S]*?)(\*Total Sales|_TSS Yallapura|_TSS Siddapura)/i);
   const sirsiText = sirsiMatch ? sirsiMatch[1] : text; // Fallback to full text
 
   // Helper to extract Min, Max, Avg from a line
