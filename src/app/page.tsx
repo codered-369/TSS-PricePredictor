@@ -330,11 +330,11 @@ export default function Dashboard() {
     <div className={styles.container}>
       {/* Top Bar for Toggles */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginBottom: '1rem', width: '100%' }}>
-        <button onClick={toggleLang} style={{ background: 'var(--glass-bg)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.4rem 1rem', borderRadius: '999px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 'bold', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', fontSize: '0.85rem' }}>
-          <Languages size={16} /> {lang === 'en' ? 'ಕನ್ನಡ' : 'English'}
+        <button onClick={toggleLang} style={{ background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500', fontSize: '0.9rem', backdropFilter: 'blur(12px)' }}>
+          <Languages size={18} /> {lang === 'en' ? 'ಕನ್ನಡ' : 'English'}
         </button>
-        <button onClick={toggleTheme} style={{ background: 'var(--glass-bg)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.4rem', width: '32px', height: '32px', borderRadius: '999px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
-          {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+        <button onClick={toggleTheme} style={{ background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.5rem', width: '38px', height: '38px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(12px)' }}>
+          {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
       </div>
 
@@ -558,8 +558,8 @@ export default function Dashboard() {
       {/* Footer */}
       <footer style={{ marginTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 0', borderTop: '1px solid var(--glass-border)', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
         {visitors !== null ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: 'var(--glass-bg)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.3rem 0.8rem', borderRadius: '999px', fontWeight: 'bold', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }}>
-            <Eye size={14} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.4rem 0.8rem', borderRadius: '8px', fontWeight: '500', backdropFilter: 'blur(12px)' }}>
+            <Eye size={16} />
             {visitors}
           </div>
         ) : <div />}
