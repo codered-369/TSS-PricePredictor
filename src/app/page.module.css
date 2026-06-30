@@ -57,6 +57,10 @@
   align-items: start;
 }
 
+.mobileJumpBtn {
+  display: none;
+}
+
 @media (max-width: 1100px) {
   .grid {
     grid-template-columns: 240px 1fr;
@@ -77,10 +81,6 @@
     justify-content: center;
     gap: 0.5rem;
   }
-}
-
-.mobileJumpBtn {
-  display: none;
 }
 
 @media (max-width: 768px) {
