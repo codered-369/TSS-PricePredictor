@@ -3,31 +3,8 @@ import { redis } from '@/lib/data';
 
 // Helper function to extract prices from raw text
 function parseWhatsAppMessage(text: string) {
-  // We will refine this once we see the exact message format!
-  // This is a placeholder parser that looks for numbers near keywords
-  
-  const extractNumbers = (regex: RegExp) => {
-    const match = text.match(regex);
-    if (match) {
-      // Find all numbers in the matched line
-      const nums = match[0].match(/\d{2,5}/g)?.map(Number) || [];
-      if (nums.length >= 2) {
-        const min = Math.min(...nums);
-        const max = Math.max(...nums);
-        const avg = Math.floor((min + max) / 2);
-        return { n: min, x: max, a: avg };
-      }
-    }
-    return { n: 0, x: 0, a: 0 };
-  };
-
-  const rashi = extractNumbers(/rashi|Rashi/i);
-  const kempu = extractNumbers(/kempu|K\.G/i);
-  const chali = extractNumbers(/chali|Ch\.K/i);
-  const pepper = extractNumbers(/pepper|Pepper/i);
-
-  // Extract Date (DD-MM-YY)
-  const dateMatch = text.match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})/);
+  // Extract Date (e.g. 29.06.2026 -> 29-06-26)
+  const dateMatch = text.match(/(\d{1,2})[\.\-\/](\d{1,2})[\.\-\/](\d{2,4})/);
   let dateStr = "";
   if (dateMatch) {
     const d = dateMatch[1].padStart(2, '0');
@@ -35,10 +12,28 @@ function parseWhatsAppMessage(text: string) {
     const y = dateMatch[3].slice(-2);
     dateStr = `${d}-${m}-${y}`;
   } else {
-    // Fallback to today
     const today = new Date();
     dateStr = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getFullYear()).slice(2)}`;
   }
+
+  // Helper to extract Min, Max, Avg from a line
+  const extractNumbers = (regex: RegExp) => {
+    const match = text.match(regex);
+    if (match) {
+      return { 
+        n: parseInt(match[1]) || 0, // Min
+        x: parseInt(match[2]) || 0, // Max
+        a: parseInt(match[3]) || 0  // Avg
+      };
+    }
+    return { n: 0, x: 0, a: 0 };
+  };
+
+  // The raw message has columns: Min, Max, Avg
+  const rashi = extractNumbers(/Rashi\s+(\d+)\s+(\d+)\s+(\d+)/i);
+  const kempu = extractNumbers(/K\.?G\.?\s+(\d+)\s+(\d+)\s+(\d+)/i);
+  const chali = extractNumbers(/Ch\.?\s*K\s+(\d+)\s+(\d+)\s+(\d+)/i);
+  const pepper = extractNumbers(/Pepper\s+(\d+)\s+(\d+)\s+(\d+)/i);
 
   return {
     d: dateStr,
