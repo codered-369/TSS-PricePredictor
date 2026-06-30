@@ -566,18 +566,19 @@ export default function Dashboard() {
       )}
 
       {/* Footer */}
-      <footer style={{ marginTop: '2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1.5rem 0', borderTop: '1px solid var(--glass-border)', color: 'var(--text-muted)', fontSize: '0.85rem', flexWrap: 'wrap', gap: '1rem' }}>
+      <footer style={{ marginTop: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '2rem 0', borderTop: '1px solid var(--glass-border)', color: 'var(--text-muted)', gap: '1.25rem' }}>
         {visitors !== null ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.4rem 0.8rem', borderRadius: '8px', fontWeight: '500', backdropFilter: 'blur(12px)' }}>
-            <Eye size={16} />
-            {visitors}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.5rem 1rem', borderRadius: '12px', fontWeight: '500', backdropFilter: 'blur(12px)', fontSize: '0.9rem' }}>
+            <Eye size={18} />
+            {visitors} Visitors
           </div>
-        ) : <div />}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', flexWrap: 'wrap' }}>
-          <span>© {new Date().getFullYear()} TSS Price Predictor</span>
-          <span style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
-            Made with <span className="heartBeat" style={{ color: '#ef4444', display: 'inline-block', fontSize: '1rem' }}>❤️</span> By Vishwa
+        ) : null}
+        
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600, color: 'var(--text-main)', fontSize: '1.05rem', letterSpacing: '0.02em' }}>
+            Made with <span className="heartBeat" style={{ color: '#ef4444', display: 'inline-block', fontSize: '1.2rem' }}>❤️</span> By Vishwa
           </span>
+          <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>© {new Date().getFullYear()} TSS Price Predictor</span>
         </div>
       </footer>
 
