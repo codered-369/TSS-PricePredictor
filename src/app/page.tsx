@@ -13,7 +13,7 @@ import {
   Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { TrendingUp, TrendingDown, AlertCircle, RefreshCw, CalendarDays, CheckCircle, Plus, Eye, Sun, Moon, Languages } from 'lucide-react';
+import { TrendingUp, TrendingDown, AlertCircle, RefreshCw, CalendarDays, CheckCircle, Plus, Eye, Sun, Moon, Languages, Share2 } from 'lucide-react';
 import styles from './page.module.css';
 import { predict7, predictStats } from '@/lib/ml';
 
@@ -332,10 +332,32 @@ export default function Dashboard() {
     }
   };
 
+  const handleShare = async () => {
+    const shareText = `*${t.title}*\n${itemLabel} ${t.currPrice}: ₹${latestAvg.toLocaleString()}\n\n${t.actionInsight} ${itemLabel}:\n_${actionText}_\n\nCheck live 7-day forecast here:`;
+    const shareUrl = 'https://tss-price-predictor.vercel.app/';
+    
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: t.title,
+          text: shareText,
+          url: shareUrl
+        });
+      } catch (err) {
+        console.error('Error sharing:', err);
+      }
+    } else {
+      window.open(`https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`, '_blank');
+    }
+  };
+
   return (
     <div className={styles.container}>
       {/* Top Bar for Toggles */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginBottom: '1rem', width: '100%' }}>
+      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginBottom: '1rem', width: '100%', flexWrap: 'wrap' }}>
+        <button onClick={handleShare} style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--accent-green)', border: '1px solid var(--glass-border)', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', fontSize: '0.9rem', backdropFilter: 'blur(12px)', marginRight: 'auto' }}>
+          <Share2 size={18} /> Share Insights
+        </button>
         <button onClick={toggleLang} style={{ background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '500', fontSize: '0.9rem', backdropFilter: 'blur(12px)' }}>
           <Languages size={18} /> {lang === 'en' ? 'ಕನ್ನಡ' : 'English'}
         </button>
