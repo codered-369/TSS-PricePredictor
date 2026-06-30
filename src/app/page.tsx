@@ -147,13 +147,15 @@ export default function Dashboard() {
       const json = await res.json();
       const loadedData = json.data;
 
-      // Automatic Daily Fetch Check
+      // Automatic Daily Fetch Check (Only after 6 PM when APMC data arrives)
       if (loadedData && loadedData.length > 0) {
         const lastEntry = loadedData[loadedData.length - 1];
         const today = new Date();
         const d = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getFullYear()).slice(2)}`;
+        const currentHour = today.getHours();
 
-        if (lastEntry.d !== d) {
+        // APMC WhatsApp updates usually arrive between 5 PM and 6 PM.
+        if (lastEntry.d !== d && currentHour >= 18) {
           fetch('/api/fetch-prices').then(() => {
             fetch('/api/data').then(r => r.json()).then(j => setData(j.data));
           });
@@ -408,7 +410,7 @@ export default function Dashboard() {
           {/* KPI Grid */}
           <div className={styles.kpiGrid}>
             <div className={`${styles.kpiCard} glass`}>
-              <div className={styles.kpiLabel}>{t.currPrice}</div>
+              <div className={styles.kpiLabel}>{t.currPrice} ({labels[labels.length - 1]})</div>
               <div className={styles.kpiValue}>₹{latestAvg.toLocaleString()}</div>
               <div className={`${styles.kpiSub} ${isUp ? styles.up : styles.down}`}>
                 {isUp ? <TrendingUp size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /> : <TrendingDown size={14} style={{ display: 'inline', verticalAlign: 'middle' }} />}
