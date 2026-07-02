@@ -13,7 +13,7 @@ import {
   Filler
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { TrendingUp, TrendingDown, AlertCircle, RefreshCw, CalendarDays, CheckCircle, Plus, Eye, Sun, Moon, Languages, Share2 } from 'lucide-react';
+import { TrendingUp, TrendingDown, AlertCircle, RefreshCw, CalendarDays, CheckCircle, Plus, Eye, Sun, Moon, Languages, Share2, Menu, Mail } from 'lucide-react';
 import styles from './page.module.css';
 import { predict7, predictStats } from '@/lib/ml';
 
@@ -120,6 +120,7 @@ export default function Dashboard() {
   // PWA Install Prompt State
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallPopup, setShowInstallPopup] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
 
   const t = TRANSLATIONS[lang];
 
@@ -400,6 +401,28 @@ export default function Dashboard() {
         <button onClick={toggleTheme} style={{ background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.5rem', width: '38px', height: '38px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(12px)' }}>
           {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
         </button>
+
+        {/* Hamburger Menu */}
+        <div style={{ position: 'relative' }}>
+          <button onClick={() => setShowMenu(!showMenu)} style={{ background: 'rgba(128, 128, 128, 0.1)', color: 'var(--text-main)', border: '1px solid var(--glass-border)', padding: '0.5rem', width: '38px', height: '38px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(12px)' }}>
+            <Menu size={18} />
+          </button>
+          
+          {showMenu && (
+            <div style={{ position: 'absolute', top: '110%', right: 0, background: 'var(--glass-bg)', border: '1px solid var(--glass-border)', borderRadius: '12px', padding: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.25rem', minWidth: '200px', zIndex: 50, backdropFilter: 'blur(30px)', boxShadow: '0 10px 40px rgba(0,0,0,0.5)' }}>
+               <button onClick={() => { syncPrices(); setShowMenu(false); }} className={styles.menuItem}>
+                 <RefreshCw size={16} className={syncing ? 'spin' : ''} /> {syncing ? t.fetching : 'Force Sync API'}
+               </button>
+               <button onClick={() => { setShowManualModal(true); setShowMenu(false); }} className={styles.menuItem}>
+                 <Plus size={16} /> Admin Manual Entry
+               </button>
+               <div style={{ height: '1px', background: 'var(--glass-border)', margin: '4px 0' }} />
+               <a href="mailto:vishwa9483500835@gmail.com" className={styles.menuItem} style={{ textDecoration: 'none' }}>
+                 <Mail size={16} /> Contact Developer
+               </a>
+            </div>
+          )}
+        </div>
       </div>
 
       <header className={styles.header}>
@@ -463,17 +486,8 @@ export default function Dashboard() {
       <div className={styles.grid}>
         {/* Sidebar */}
         <aside className={styles.sidebar}>
-          <button className={styles.syncBtn} onClick={syncPrices} disabled={syncing}>
-            <RefreshCw size={18} className={syncing ? 'spin' : ''} />
-            {syncing ? t.fetching : t.fetchBtn}
-          </button>
 
-          <button className={styles.syncBtn} onClick={() => setShowManualModal(true)} style={{ background: 'var(--accent-green)' }}>
-            <Plus size={18} />
-            {t.manualBtn}
-          </button>
-
-          <div style={{ marginTop: '1rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
             <h3 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '4px' }}>{t.commodity}</h3>
             {Object.entries(ITEMS).map(([key, item]) => (
               <button
