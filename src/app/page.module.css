@@ -393,6 +393,10 @@
   background: rgba(128, 128, 128, 0.1);
 }
 
+.mobile-only-text {
+  display: none;
+}
+
 @media (max-width: 1100px) {
   /* No changes needed for tablet anymore since rightSidebar is gone */
 }
@@ -412,4 +416,7 @@
   }
   .sidebar { width: 100%; }
   .mainContent { width: 100%; }
+  .mobile-only-text {
+    display: inline;
+  }
 }

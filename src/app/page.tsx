@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -125,6 +125,17 @@ export default function Dashboard() {
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [showInstallPopup, setShowInstallPopup] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const chartScrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Auto-scroll the chart to the far right on mobile to always reveal the latest 7-day forecast
+    const timeoutId = setTimeout(() => {
+      if (chartScrollRef.current) {
+        chartScrollRef.current.scrollLeft = chartScrollRef.current.scrollWidth;
+      }
+    }, 100); // slight delay to allow rendering
+    return () => clearTimeout(timeoutId);
+  }, [activeItem, data]);
 
   const t = TRANSLATIONS[lang];
 
@@ -595,9 +606,12 @@ export default function Dashboard() {
           <div className={`${styles.chartCard} glass`} style={{ paddingBottom: '0.5rem' }}>
             <div className={styles.chartHeader}>
               <div className={styles.chartTitle}>{t.trendProj}</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                <span className="mobile-only-text">← Swipe for history</span>
+              </div>
             </div>
             {/* Scrollable Container for Mobile */}
-            <div style={{ width: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: '1rem' }}>
+            <div ref={chartScrollRef} style={{ width: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: '1rem', scrollBehavior: 'smooth' }}>
               <div style={{ minWidth: '800px', height: '300px', position: 'relative' }}>
                 <Line data={chartData} options={chartOptions as any} />
               </div>
