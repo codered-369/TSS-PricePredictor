@@ -52,7 +52,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 240px 1fr 280px;
+  grid-template-columns: 240px 1fr;
   gap: 2rem;
   align-items: start;
 }
@@ -284,13 +284,7 @@
 .hLabel { color: var(--text-muted); }
 .hVal { font-weight: 600; }
 
-.rightSidebar {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  position: sticky;
-  top: 2rem;
-}
+
 
 /* Modal Styles */
 .modalOverlay {
@@ -363,12 +357,7 @@
 }
 
 @media (max-width: 1100px) {
-  .grid {
-    grid-template-columns: 240px 1fr;
-  }
-  .rightSidebar {
-    position: static !important;
-  }
+  /* No changes needed for tablet anymore since rightSidebar is gone */
 }
 
 @media (max-width: 768px) {
@@ -377,7 +366,6 @@
     flex-direction: column;
     gap: 2rem;
   }
-  .rightSidebar { order: 1; width: 100%; position: static !important; }
-  .sidebar { order: 2; width: 100%; }
-  .mainContent { order: 3; width: 100%; }
+  .sidebar { width: 100%; }
+  .mainContent { width: 100%; }
 }

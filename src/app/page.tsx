@@ -407,6 +407,47 @@ export default function Dashboard() {
         <p>{t.subtitle}</p>
       </header>
 
+      {/* Today's / Selected Date Prices for All Items (Moved to Top) */}
+      <div id="today-rates" className={`${styles.chartCard} glass`} style={{ minHeight: 'auto', marginBottom: '2rem', background: 'var(--accent-blue-bg, rgba(59, 130, 246, 0.05))', borderColor: 'rgba(59, 130, 246, 0.2)' }}>
+        <div className={styles.chartHeader} style={{ marginBottom: '1rem' }}>
+          <div className={styles.chartTitle} style={{ fontSize: '1.25rem' }}>{t.marketRatesFor} {formattedSelectedDate}</div>
+        </div>
+        {(() => {
+          const internalDate = parseToInternalDate(selectedDate);
+          const dayData = data.find(d => d.d === internalDate);
+
+          if (!dayData) {
+            return <div style={{ color: 'var(--text-muted)', padding: '1rem', textAlign: 'center' }}>
+              {t.noData}
+            </div>;
+          }
+
+          return (
+            <div className={styles.historyGrid}>
+              {Object.entries(ITEMS).map(([key, item]) => (
+                <div key={key} className={styles.historyCard} style={{ background: 'var(--glass-bg)' }}>
+                  <div className={styles.hCardHeader} style={{ color: item.color }}>
+                    {item.emoji} {t[key as keyof typeof t]}
+                  </div>
+                  <div className={styles.hRow}>
+                    <span className={styles.hLabel}>{t.avg}</span>
+                    <span className={styles.hVal}>₹{dayData[item.avgKey].toLocaleString()}</span>
+                  </div>
+                  <div className={styles.hRow}>
+                    <span className={styles.hLabel}>{t.min}</span>
+                    <span className={styles.hVal} style={{ color: 'var(--accent-red)' }}>₹{dayData[item.minKey].toLocaleString()}</span>
+                  </div>
+                  <div className={styles.hRow}>
+                    <span className={styles.hLabel}>{t.max}</span>
+                    <span className={styles.hVal} style={{ color: 'var(--accent-green)' }}>₹{dayData[item.maxKey].toLocaleString()}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          );
+        })()}
+      </div>
+
       {/* Actionable Banner */}
       <div className={`${styles.actionBanner} ${styles[actionType] || ''}`}>
         {actionType === 'wait' ? <CalendarDays size={28} /> : actionType === 'sell' ? <AlertCircle size={28} /> : <CheckCircle size={28} />}
@@ -517,49 +558,6 @@ export default function Dashboard() {
           </div>
         </main>
 
-        {/* Right Sidebar */}
-        <aside id="today-rates" className={styles.rightSidebar}>
-          {/* Today's / Selected Date Prices for All Items */}
-          <div className={`${styles.chartCard} glass`} style={{ minHeight: 'auto', background: 'var(--accent-blue-bg, rgba(59, 130, 246, 0.05))', borderColor: 'rgba(59, 130, 246, 0.2)' }}>
-            <div className={styles.chartHeader} style={{ marginBottom: '1rem' }}>
-              <div className={styles.chartTitle} style={{ fontSize: '1.1rem' }}>{t.marketRatesFor} {formattedSelectedDate}</div>
-            </div>
-            {(() => {
-              const internalDate = parseToInternalDate(selectedDate);
-              const dayData = data.find(d => d.d === internalDate);
-
-              if (!dayData) {
-                return <div style={{ color: 'var(--text-muted)', padding: '1rem', textAlign: 'center' }}>
-                  {t.noData}
-                </div>;
-              }
-
-              return (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {Object.entries(ITEMS).map(([key, item]) => (
-                    <div key={key} className={styles.historyCard} style={{ background: 'var(--glass-bg)' }}>
-                      <div className={styles.hCardHeader} style={{ color: item.color }}>
-                        {item.emoji} {t[key as keyof typeof t]}
-                      </div>
-                      <div className={styles.hRow}>
-                        <span className={styles.hLabel}>{t.avg}</span>
-                        <span className={styles.hVal}>₹{dayData[item.avgKey].toLocaleString()}</span>
-                      </div>
-                      <div className={styles.hRow}>
-                        <span className={styles.hLabel}>{t.min}</span>
-                        <span className={styles.hVal} style={{ color: 'var(--accent-red)' }}>₹{dayData[item.minKey].toLocaleString()}</span>
-                      </div>
-                      <div className={styles.hRow}>
-                        <span className={styles.hLabel}>{t.max}</span>
-                        <span className={styles.hVal} style={{ color: 'var(--accent-green)' }}>₹{dayData[item.maxKey].toLocaleString()}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              );
-            })()}
-          </div>
-        </aside>
       </div>
 
       {showManualModal && (
