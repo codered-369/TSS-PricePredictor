@@ -391,7 +391,7 @@ export default function Dashboard() {
   return (
     <div className={styles.container}>
       {/* Top Bar for Toggles */}
-      <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem', marginBottom: '1rem', width: '100%', flexWrap: 'wrap' }}>
+      <div className={styles.stickyTopBar}>
         <button onClick={handleShare} style={{ background: 'rgba(16, 185, 129, 0.1)', color: 'var(--accent-green)', border: '1px solid var(--glass-border)', padding: '0.5rem 1rem', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: '600', fontSize: '0.9rem', backdropFilter: 'blur(12px)', marginRight: 'auto' }}>
           <Share2 size={18} /> Share Insights
         </button>

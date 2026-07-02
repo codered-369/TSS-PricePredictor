@@ -4,6 +4,23 @@
   padding: 2rem;
 }
 
+.stickyTopBar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  width: 100%;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 1rem 2rem;
+  margin: -2rem -2rem 1.5rem -2rem;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+}
+
 .header {
   text-align: center;
   margin-bottom: 3rem;
