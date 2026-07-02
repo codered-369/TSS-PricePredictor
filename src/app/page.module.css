@@ -57,36 +57,20 @@
   align-items: start;
 }
 
-.mobileJumpBtn {
-  display: none;
-}
-
 @media (max-width: 1100px) {
   .grid {
     grid-template-columns: 240px 1fr;
-  }
-  .mobileJumpBtn {
-    display: flex;
-    width: 100%;
-    margin-bottom: 1.5rem;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(12px);
-    color: var(--text-main);
-    padding: 1rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
   }
 }
 
 @media (max-width: 768px) {
   .grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
   }
+  .sidebar { order: 1; width: 100%; }
+  .rightSidebar { order: 2; width: 100%; }
+  .mainContent { order: 3; width: 100%; }
 }
 
 .sidebar {

@@ -418,9 +418,6 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <button className={styles.mobileJumpBtn} onClick={scrollToRates}>
-        {t.marketRatesFor} {formattedSelectedDate} ↓
-      </button>
 
       <div className={styles.grid}>
         {/* Sidebar */}
