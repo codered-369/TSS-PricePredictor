@@ -694,6 +694,22 @@ export default function Dashboard() {
           </span>
           <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>© {new Date().getFullYear()} TSS Price Predictor</span>
         </div>
+        
+        {/* Disclaimer Text */}
+        <div style={{
+          marginTop: '1.5rem',
+          textAlign: 'center',
+          color: 'var(--text-muted)',
+          fontSize: '0.75rem',
+          lineHeight: '1.6',
+          opacity: 0.7,
+          maxWidth: '1200px',
+          padding: '0 1rem'
+        }}>
+          <p style={{ margin: 0 }}>
+            <strong>{t.disclaimerTitle}</strong> {t.disclaimerText}
+          </p>
+        </div>
       </footer>
 
       {/* PWA Install Popup */}
@@ -727,21 +743,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Footer Disclaimer */}
-      <footer style={{
-        marginTop: '4rem',
-        paddingTop: '2rem',
-        borderTop: '1px solid var(--glass-border)',
-        textAlign: 'center',
-        color: 'var(--text-muted)',
-        fontSize: '0.75rem',
-        lineHeight: '1.6',
-        opacity: 0.7
-      }}>
-        <p style={{ margin: '0 auto', maxWidth: '800px' }}>
-          <strong>{t.disclaimerTitle}</strong> {t.disclaimerText}
-        </p>
-      </footer>
+
       <style jsx global>{`
         .spin { animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
