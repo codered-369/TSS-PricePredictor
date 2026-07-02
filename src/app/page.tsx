@@ -56,7 +56,9 @@ const TRANSLATIONS = {
     P: "Pepper",
     addManualHeader: "Add Manual Market Rates",
     cancel: "Cancel",
-    saveAndTrain: "Save & Train Model"
+    saveAndTrain: "Save & Train Model",
+    disclaimerTitle: "Disclaimer:",
+    disclaimerText: "The 7-day market forecasts and actionable insights provided by TSS Sirsi Smart Predictor are generated using machine learning models based on historical APMC data. They are for informational and educational purposes only and do not constitute financial advice. Agricultural markets are highly volatile and subject to sudden changes. We are not liable for any financial losses incurred based on these predictions. Always exercise your own independent judgment before making selling decisions."
   },
   kn: {
     title: "TSS ಶಿರಸಿ ಸ್ಮಾರ್ಟ್ ಭವಿಷ್ಯ",
@@ -94,7 +96,9 @@ const TRANSLATIONS = {
     P: "ಕಾಳುಮೆಣಸು",
     addManualHeader: "ಹಸ್ತಚಾಲಿತ ಮಾರುಕಟ್ಟೆ ದರಗಳನ್ನು ಸೇರಿಸಿ",
     cancel: "ರದ್ದುಮಾಡಿ",
-    saveAndTrain: "ಉಳಿಸಿ ಮತ್ತು ಮಾಡೆಲ್ ತರಬೇತಿ ನೀಡಿ"
+    saveAndTrain: "ಉಳಿಸಿ ಮತ್ತು ಮಾಡೆಲ್ ತರಬೇತಿ ನೀಡಿ",
+    disclaimerTitle: "ಹಕ್ಕು ನಿರಾಕರಣೆ:",
+    disclaimerText: "TSS ಶಿರಸಿ ಸ್ಮಾರ್ಟ್ ಭವಿಷ್ಯ ಒದಗಿಸುವ 7-ದಿನದ ಮಾರುಕಟ್ಟೆ ಮುನ್ಸೂಚನೆಗಳು ಮತ್ತು ಒಳನೋಟಗಳನ್ನು ಐತಿಹಾಸಿಕ APMC ಡೇಟಾವನ್ನು ಆಧರಿಸಿದ ಮಷಿನ್ ಲರ್ನಿಂಗ್ ಮಾದರಿಗಳನ್ನು ಬಳಸಿ ರಚಿಸಲಾಗಿದೆ. ಅವು ಮಾಹಿತಿ ಮತ್ತು ಶೈಕ್ಷಣಿಕ ಉದ್ದೇಶಗಳಿಗಾಗಿ ಮಾತ್ರ ಮತ್ತು ಆರ್ಥಿಕ ಸಲಹೆಯಲ್ಲ. ಕೃಷಿ ಮಾರುಕಟ್ಟೆಗಳು ಹೆಚ್ಚು ಅಸ್ಥಿರವಾಗಿರುತ್ತವೆ ಮತ್ತು ಹಠಾತ್ ಬದಲಾವಣೆಗಳಿಗೆ ಒಳಪಟ್ಟಿರುತ್ತವೆ. ಈ ಮುನ್ಸೂಚನೆಗಳ ಆಧಾರದ ಮೇಲೆ ಉಂಟಾದ ಯಾವುದೇ ಆರ್ಥಿಕ ನಷ್ಟಕ್ಕೆ ನಾವು ಜವಾಬ್ದಾರರಾಗಿರುವುದಿಲ್ಲ. ಮಾರಾಟದ ನಿರ್ಧಾರಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳುವ ಮೊದಲು ಯಾವಾಗಲೂ ನಿಮ್ಮ ಸ್ವಂತ ಸ್ವತಂತ್ರ ತೀರ್ಮಾನವನ್ನು ಬಳಸಿ."
   }
 };
 
@@ -601,8 +605,8 @@ export default function Dashboard() {
       </div>
 
       {showManualModal && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent}>
+        <div className={styles.modalOverlay} onClick={() => setShowManualModal(false)}>
+          <div className={styles.modalContent} onClick={e => e.stopPropagation()}>
             <div className={styles.modalHeader}>
               <h2 style={{ fontSize: '1.5rem' }}>{t.addManualHeader}</h2>
               <button onClick={() => setShowManualModal(false)} style={{ background: 'transparent', border: 'none', color: 'var(--text-main)', cursor: 'pointer', fontSize: '1.5rem' }}>×</button>
@@ -706,6 +710,21 @@ export default function Dashboard() {
         </div>
       )}
 
+      {/* Footer Disclaimer */}
+      <footer style={{
+        marginTop: '4rem',
+        paddingTop: '2rem',
+        borderTop: '1px solid var(--glass-border)',
+        textAlign: 'center',
+        color: 'var(--text-muted)',
+        fontSize: '0.75rem',
+        lineHeight: '1.6',
+        opacity: 0.7
+      }}>
+        <p style={{ margin: '0 auto', maxWidth: '800px' }}>
+          <strong>{t.disclaimerTitle}</strong> {t.disclaimerText}
+        </p>
+      </footer>
       <style jsx global>{`
         .spin { animation: spin 1s linear infinite; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
