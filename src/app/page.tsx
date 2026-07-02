@@ -289,6 +289,9 @@ export default function Dashboard() {
   const latestAvg = avgs[avgs.length - 1];
   const prevAvg = avgs[avgs.length - 2] || latestAvg;
   const pctChange = (((latestAvg - prevAvg) / prevAvg) * 100).toFixed(1);
+  const latestDateRaw = labels[labels.length - 1] || '';
+  const dParts = latestDateRaw.split('-');
+  const formattedLatestDate = dParts.length === 3 ? `${dParts[0]}-${dParts[1]}-20${dParts[2]}` : latestDateRaw;
   const isUp = latestAvg >= prevAvg;
 
   // Predictions
@@ -464,11 +467,11 @@ export default function Dashboard() {
           {/* KPI Grid */}
           <div className={styles.kpiGrid}>
             <div className={`${styles.kpiCard} glass`}>
-              <div className={styles.kpiLabel}>{t.currPrice} ({labels[labels.length - 1]})</div>
+              <div className={styles.kpiLabel}>{t.currPrice} ({formattedLatestDate})</div>
               <div className={styles.kpiValue}>₹{latestAvg.toLocaleString()}</div>
               <div className={`${styles.kpiSub} ${isUp ? styles.up : styles.down}`}>
                 {isUp ? <TrendingUp size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /> : <TrendingDown size={14} style={{ display: 'inline', verticalAlign: 'middle' }} />}
-                {' '}{Math.abs(Number(pctChange))}% {t.vsYest}
+                {' '}{Math.abs(Number(pctChange))}% {t.vsYest} (₹{prevAvg.toLocaleString()})
               </div>
             </div>
             <div className={`${styles.kpiCard} glass`}>
