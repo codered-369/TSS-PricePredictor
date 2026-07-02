@@ -592,12 +592,15 @@ export default function Dashboard() {
           </div>
 
           {/* Chart */}
-          <div className={`${styles.chartCard} glass`}>
+          <div className={`${styles.chartCard} glass`} style={{ paddingBottom: '0.5rem' }}>
             <div className={styles.chartHeader}>
               <div className={styles.chartTitle}>{t.trendProj}</div>
             </div>
-            <div style={{ height: '300px' }}>
-              <Line data={chartData} options={chartOptions as any} />
+            {/* Scrollable Container for Mobile */}
+            <div style={{ width: '100%', overflowX: 'auto', WebkitOverflowScrolling: 'touch', paddingBottom: '1rem' }}>
+              <div style={{ minWidth: '800px', height: '300px', position: 'relative' }}>
+                <Line data={chartData} options={chartOptions as any} />
+              </div>
             </div>
           </div>
         </main>
