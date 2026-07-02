@@ -432,8 +432,19 @@ export default function Dashboard() {
 
       {/* Today's / Selected Date Prices for All Items (Moved to Top) */}
       <div id="today-rates" className={`${styles.chartCard} glass`} style={{ minHeight: 'auto', marginBottom: '2rem', background: 'var(--accent-blue-bg, rgba(59, 130, 246, 0.05))', borderColor: 'rgba(59, 130, 246, 0.2)' }}>
-        <div className={styles.chartHeader} style={{ marginBottom: '1rem' }}>
-          <div className={styles.chartTitle} style={{ fontSize: '1.25rem' }}>{t.marketRatesFor} {formattedSelectedDate}</div>
+        <div className={styles.chartHeader} style={{ marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
+          <div className={styles.chartTitle} style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
+            {t.marketRatesFor}
+            <input 
+              type="date" 
+              className={styles.datePicker} 
+              value={selectedDate}
+              onChange={(e) => setSelectedDate(e.target.value)}
+              max={data.length > 0 ? parseToInputDate(data[data.length - 1].d) : undefined}
+              min={data.length > 0 ? parseToInputDate(data[0].d) : undefined}
+              style={{ padding: '0.5rem 0.75rem', fontSize: '1rem', background: 'rgba(255,255,255,0.05)' }}
+            />
+          </div>
         </div>
         {(() => {
           const internalDate = parseToInternalDate(selectedDate);
@@ -500,18 +511,7 @@ export default function Dashboard() {
             ))}
           </div>
 
-          <div style={{ marginTop: '2rem' }}>
-            <h3 style={{ fontSize: '0.9rem', color: 'var(--text-muted)', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{t.histDate}</h3>
-            <input
-              type="date"
-              className={styles.datePicker}
-              style={{ width: '100%' }}
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              max={data.length > 0 ? parseToInputDate(data[data.length - 1].d) : undefined}
-              min={data.length > 0 ? parseToInputDate(data[0].d) : undefined}
-            />
-          </div>
+
         </aside>
 
         {/* Main Content */}
