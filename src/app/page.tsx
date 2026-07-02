@@ -282,7 +282,11 @@ export default function Dashboard() {
   if (loading) return <div style={{ color: 'var(--text-main)', padding: '2rem', textAlign: 'center' }}>Loading prediction engine...</div>;
   if (!data.length) return <div style={{ color: 'var(--text-main)' }}>No data found.</div>;
 
-  const formattedSelectedDate = selectedDate ? selectedDate.split('-').reverse().join('-') : '';
+  let beautifulDate = '';
+  if (selectedDate) {
+    const d = new Date(selectedDate);
+    beautifulDate = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' });
+  }
   const itemDef = ITEMS[activeItem as keyof typeof ITEMS];
   const itemLabel = t[activeItem as keyof typeof t];
   const avgs = data.map((d) => d[itemDef.avgKey] || 0);
@@ -435,15 +439,37 @@ export default function Dashboard() {
         <div className={styles.chartHeader} style={{ marginBottom: '1rem', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
           <div className={styles.chartTitle} style={{ fontSize: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.75rem', flexWrap: 'wrap' }}>
             {t.marketRatesFor}
-            <input 
-              type="date" 
-              className={styles.datePicker} 
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              max={data.length > 0 ? parseToInputDate(data[data.length - 1].d) : undefined}
-              min={data.length > 0 ? parseToInputDate(data[0].d) : undefined}
-              style={{ padding: '0.5rem 0.75rem', fontSize: '1rem', background: 'rgba(255,255,255,0.05)' }}
-            />
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+              <div style={{ 
+                padding: '0.5rem 0.75rem', 
+                fontSize: '1rem', 
+                background: 'rgba(255,255,255,0.1)', 
+                border: '1px solid var(--glass-border)',
+                borderRadius: '8px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                cursor: 'pointer',
+                fontWeight: 600
+              }}>
+                {beautifulDate} <CalendarDays size={18} opacity={0.8} />
+              </div>
+              <input 
+                type="date" 
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                max={data.length > 0 ? parseToInputDate(data[data.length - 1].d) : undefined}
+                min={data.length > 0 ? parseToInputDate(data[0].d) : undefined}
+                style={{ 
+                  position: 'absolute', 
+                  top: 0, left: 0, right: 0, bottom: 0, 
+                  opacity: 0, 
+                  width: '100%', 
+                  height: '100%', 
+                  cursor: 'pointer' 
+                }}
+              />
+            </div>
           </div>
         </div>
         {(() => {
