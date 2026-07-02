@@ -281,6 +281,7 @@ export default function Dashboard() {
   if (loading) return <div style={{ color: 'var(--text-main)', padding: '2rem', textAlign: 'center' }}>Loading prediction engine...</div>;
   if (!data.length) return <div style={{ color: 'var(--text-main)' }}>No data found.</div>;
 
+  const formattedSelectedDate = selectedDate ? selectedDate.split('-').reverse().join('-') : '';
   const itemDef = ITEMS[activeItem as keyof typeof ITEMS];
   const itemLabel = t[activeItem as keyof typeof t];
   const avgs = data.map((d) => d[itemDef.avgKey] || 0);
@@ -418,7 +419,7 @@ export default function Dashboard() {
       </div>
 
       <button className={styles.mobileJumpBtn} onClick={scrollToRates}>
-        {t.marketRatesFor} {selectedDate || ''} ↓
+        {t.marketRatesFor} {formattedSelectedDate} ↓
       </button>
 
       <div className={styles.grid}>
@@ -524,7 +525,7 @@ export default function Dashboard() {
           {/* Today's / Selected Date Prices for All Items */}
           <div className={`${styles.chartCard} glass`} style={{ minHeight: 'auto', background: 'var(--accent-blue-bg, rgba(59, 130, 246, 0.05))', borderColor: 'rgba(59, 130, 246, 0.2)' }}>
             <div className={styles.chartHeader} style={{ marginBottom: '1rem' }}>
-              <div className={styles.chartTitle} style={{ fontSize: '1.1rem' }}>{t.marketRatesFor} {selectedDate || ''}</div>
+              <div className={styles.chartTitle} style={{ fontSize: '1.1rem' }}>{t.marketRatesFor} {formattedSelectedDate}</div>
             </div>
             {(() => {
               const internalDate = parseToInternalDate(selectedDate);
