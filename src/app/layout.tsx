@@ -37,8 +37,33 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TSS Sirsi Smart Price Predictor",
+    "description": "Live daily market prices and AI-powered 7-day price predictions for TSS Sirsi Arecanut (Rashi, Chali, Kempu Gotu, Pepper).",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "INR"
+    },
+    "provider": {
+      "@type": "Organization",
+      "name": "TSS Price Predictor"
+    },
+    "keywords": "TSS Sirsi, Arecanut price, Sirsi APMC, Rashi arecanut price, Chali arecanut"
+  };
+
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );
