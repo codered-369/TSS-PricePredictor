@@ -298,7 +298,7 @@ export default function Dashboard() {
     }
   };
 
-  if (loading) return <div style={{ color: 'var(--text-main)', padding: '2rem', textAlign: 'center' }}>Loading prediction engine...</div>;
+  if (loading) return <div style={{ color: 'var(--text-main)', padding: '2rem', textAlign: 'center' }}>Syncing live market data from Sirsi APMC...</div>;
   if (!data.length) return <div style={{ color: 'var(--text-main)' }}>No data found.</div>;
 
   let beautifulDate = '';
