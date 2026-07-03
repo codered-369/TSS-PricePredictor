@@ -473,6 +473,13 @@ export default function Dashboard() {
                 type="date" 
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
+                onClick={(e) => {
+                  try {
+                    if ('showPicker' in e.currentTarget) {
+                      e.currentTarget.showPicker();
+                    }
+                  } catch (err) {}
+                }}
                 max={data.length > 0 ? parseToInputDate(data[data.length - 1].d) : undefined}
                 min={data.length > 0 ? parseToInputDate(data[0].d) : undefined}
                 style={{ 
