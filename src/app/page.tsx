@@ -715,6 +715,7 @@ export default function Dashboard() {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600, color: 'var(--text-main)', fontSize: '1.05rem', letterSpacing: '0.02em' }}>
             Made with <span className="heartBeat" style={{ color: '#ef4444', display: 'inline-block', fontSize: '1.2rem' }}>❤️</span> By Vishwa
+          </span>
           <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>© {new Date().getFullYear()} TSS Price Predictor</span>
           <span style={{ fontSize: '0.8rem', color: 'var(--accent-green)', fontWeight: 500, marginTop: '0.25rem', textAlign: 'center', padding: '0 1rem' }}>
             {t.poweredBy}
