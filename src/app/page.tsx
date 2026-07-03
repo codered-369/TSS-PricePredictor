@@ -59,7 +59,8 @@ const TRANSLATIONS = {
     saveAndTrain: "Save & Train Model",
     disclaimerTitle: "Disclaimer:",
     disclaimerText: "Data Source: Verified daily market rates sourced directly from official TSS Sirsi WhatsApp updates. The 7-day market forecasts and actionable insights provided by TSS Sirsi Smart Predictor are generated using machine learning models based on historical APMC data. This is an independent analytical tool and is not officially affiliated with the Totgars' Cooperative Sale Society (TSS). They are for informational and educational purposes only and do not constitute financial advice. Agricultural markets are highly volatile and subject to sudden changes. We are not liable for any financial losses incurred based on these predictions. Always exercise your own independent judgment before making selling decisions.",
-    awaitingData: "Awaiting today's rates..."
+    awaitingData: "Awaiting today's rates...",
+    poweredBy: "⚡ Powered by Twilio & AI extraction from live WhatsApp updates"
   },
   kn: {
     title: "TSS ಶಿರಸಿ ಸ್ಮಾರ್ಟ್ ಭವಿಷ್ಯ",
@@ -100,7 +101,8 @@ const TRANSLATIONS = {
     saveAndTrain: "ಉಳಿಸಿ ಮತ್ತು ಮಾಡೆಲ್ ತರಬೇತಿ ನೀಡಿ",
     disclaimerTitle: "ಹಕ್ಕು ನಿರಾಕರಣೆ:",
     disclaimerText: "ಡೇಟಾ ಮೂಲ: ಅಧಿಕೃತ TSS ಶಿರಸಿ ವಾಟ್ಸಾಪ್ ಅಪ್‌ಡೇಟ್‌ಗಳಿಂದ ನೇರವಾಗಿ ಪಡೆಯಲಾದ ಪರಿಶೀಲಿಸಿದ ದೈನಂದಿನ ಮಾರುಕಟ್ಟೆ ದರಗಳು. TSS ಶಿರಸಿ ಸ್ಮಾರ್ಟ್ ಭವಿಷ್ಯ ಒದಗಿಸುವ 7-ದಿನದ ಮಾರುಕಟ್ಟೆ ಮುನ್ಸೂಚನೆಗಳು ಮತ್ತು ಒಳನೋಟಗಳನ್ನು ಐತಿಹಾಸಿಕ APMC ಡೇಟಾವನ್ನು ಆಧರಿಸಿದ ಮಷಿನ್ ಲರ್ನಿಂಗ್ ಮಾದರಿಗಳನ್ನು ಬಳಸಿ ರಚಿಸಲಾಗಿದೆ. ಇದು ಸ್ವತಂತ್ರ ವಿಶ್ಲೇಷಣಾತ್ಮಕ ಸಾಧನವಾಗಿದೆ ಮತ್ತು ತೋಟಗಾರ್ಸ್ ಕೋಆಪರೇಟಿವ್ ಸೇಲ್ ಸೊಸೈಟಿ (TSS) ನೊಂದಿಗೆ ಅಧಿಕೃತವಾಗಿ ಸಂಯೋಜಿತವಾಗಿಲ್ಲ. ಅವು ಮಾಹಿತಿ ಮತ್ತು ಶೈಕ್ಷಣಿಕ ಉದ್ದೇಶಗಳಿಗಾಗಿ ಮಾತ್ರ ಮತ್ತು ಆರ್ಥಿಕ ಸಲಹೆಯಲ್ಲ. ಕೃಷಿ ಮಾರುಕಟ್ಟೆಗಳು ಹೆಚ್ಚು ಅಸ್ಥಿರವಾಗಿರುತ್ತವೆ ಮತ್ತು ಹಠಾತ್ ಬದಲಾವಣೆಗಳಿಗೆ ಒಳಪಟ್ಟಿರುತ್ತವೆ. ಈ ಮುನ್ಸೂಚನೆಗಳ ಆಧಾರದ ಮೇಲೆ ಉಂಟಾದ ಯಾವುದೇ ಆರ್ಥಿಕ ನಷ್ಟಕ್ಕೆ ನಾವು ಜವಾಬ್ದಾರರಾಗಿರುವುದಿಲ್ಲ. ಮಾರಾಟದ ನಿರ್ಧಾರಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳುವ ಮೊದಲು ಯಾವಾಗಲೂ ನಿಮ್ಮ ಸ್ವಂತ ಸ್ವತಂತ್ರ ತೀರ್ಮಾನವನ್ನು ಬಳಸಿ.",
-    awaitingData: "ಇಂದಿನ ದರಗಳಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ..."
+    awaitingData: "ಇಂದಿನ ದರಗಳಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ...",
+    poweredBy: "⚡ ಲೈವ್ ವಾಟ್ಸಾಪ್ ಅಪ್‌ಡೇಟ್‌ಗಳಿಂದ ಟ್ವಿಲಿಯೊ ಮತ್ತು AI ಡೇಟಾ ಹೊರತೆಗೆಯುವಿಕೆಯಿಂದ ನಡೆಸಲ್ಪಡುತ್ತಿದೆ"
   }
 };
 
@@ -713,8 +715,10 @@ export default function Dashboard() {
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
           <span style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 600, color: 'var(--text-main)', fontSize: '1.05rem', letterSpacing: '0.02em' }}>
             Made with <span className="heartBeat" style={{ color: '#ef4444', display: 'inline-block', fontSize: '1.2rem' }}>❤️</span> By Vishwa
-          </span>
           <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>© {new Date().getFullYear()} TSS Price Predictor</span>
+          <span style={{ fontSize: '0.8rem', color: 'var(--accent-green)', fontWeight: 500, marginTop: '0.25rem', textAlign: 'center', padding: '0 1rem' }}>
+            {t.poweredBy}
+          </span>
         </div>
         
         {/* Disclaimer Text */}
