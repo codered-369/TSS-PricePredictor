@@ -339,10 +339,12 @@ export default function Dashboard() {
   let actionText = '';
   let actionType = 'wait';
 
-  if (currentDiffToPeak > 500 && peakIndex > 1) {
+  const numericPctChange = parseFloat(pctChange);
+
+  if (currentDiffToPeak > 500) {
     actionText = t.actionWait.replace('{price}', peakPrice.toLocaleString()).replace('{date}', futureLabels[peakIndex]);
     actionType = 'wait';
-  } else if (stats.slope < -100) {
+  } else if (stats.slope < -100 || numericPctChange < -5) {
     actionText = t.actionSell;
     actionType = 'sell';
   } else {
