@@ -58,7 +58,8 @@ const TRANSLATIONS = {
     cancel: "Cancel",
     saveAndTrain: "Save & Train Model",
     disclaimerTitle: "Disclaimer:",
-    disclaimerText: "The 7-day market forecasts and actionable insights provided by TSS Sirsi Smart Predictor are generated using machine learning models based on historical APMC data. They are for informational and educational purposes only and do not constitute financial advice. Agricultural markets are highly volatile and subject to sudden changes. We are not liable for any financial losses incurred based on these predictions. Always exercise your own independent judgment before making selling decisions."
+    disclaimerText: "The 7-day market forecasts and actionable insights provided by TSS Sirsi Smart Predictor are generated using machine learning models based on historical APMC data. They are for informational and educational purposes only and do not constitute financial advice. Agricultural markets are highly volatile and subject to sudden changes. We are not liable for any financial losses incurred based on these predictions. Always exercise your own independent judgment before making selling decisions.",
+    awaitingData: "Awaiting today's rates..."
   },
   kn: {
     title: "TSS ಶಿರಸಿ ಸ್ಮಾರ್ಟ್ ಭವಿಷ್ಯ",
@@ -98,7 +99,8 @@ const TRANSLATIONS = {
     cancel: "ರದ್ದುಮಾಡಿ",
     saveAndTrain: "ಉಳಿಸಿ ಮತ್ತು ಮಾಡೆಲ್ ತರಬೇತಿ ನೀಡಿ",
     disclaimerTitle: "ಹಕ್ಕು ನಿರಾಕರಣೆ:",
-    disclaimerText: "TSS ಶಿರಸಿ ಸ್ಮಾರ್ಟ್ ಭವಿಷ್ಯ ಒದಗಿಸುವ 7-ದಿನದ ಮಾರುಕಟ್ಟೆ ಮುನ್ಸೂಚನೆಗಳು ಮತ್ತು ಒಳನೋಟಗಳನ್ನು ಐತಿಹಾಸಿಕ APMC ಡೇಟಾವನ್ನು ಆಧರಿಸಿದ ಮಷಿನ್ ಲರ್ನಿಂಗ್ ಮಾದರಿಗಳನ್ನು ಬಳಸಿ ರಚಿಸಲಾಗಿದೆ. ಅವು ಮಾಹಿತಿ ಮತ್ತು ಶೈಕ್ಷಣಿಕ ಉದ್ದೇಶಗಳಿಗಾಗಿ ಮಾತ್ರ ಮತ್ತು ಆರ್ಥಿಕ ಸಲಹೆಯಲ್ಲ. ಕೃಷಿ ಮಾರುಕಟ್ಟೆಗಳು ಹೆಚ್ಚು ಅಸ್ಥಿರವಾಗಿರುತ್ತವೆ ಮತ್ತು ಹಠಾತ್ ಬದಲಾವಣೆಗಳಿಗೆ ಒಳಪಟ್ಟಿರುತ್ತವೆ. ಈ ಮುನ್ಸೂಚನೆಗಳ ಆಧಾರದ ಮೇಲೆ ಉಂಟಾದ ಯಾವುದೇ ಆರ್ಥಿಕ ನಷ್ಟಕ್ಕೆ ನಾವು ಜವಾಬ್ದಾರರಾಗಿರುವುದಿಲ್ಲ. ಮಾರಾಟದ ನಿರ್ಧಾರಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳುವ ಮೊದಲು ಯಾವಾಗಲೂ ನಿಮ್ಮ ಸ್ವಂತ ಸ್ವತಂತ್ರ ತೀರ್ಮಾನವನ್ನು ಬಳಸಿ."
+    disclaimerText: "TSS ಶಿರಸಿ ಸ್ಮಾರ್ಟ್ ಭವಿಷ್ಯ ಒದಗಿಸುವ 7-ದಿನದ ಮಾರುಕಟ್ಟೆ ಮುನ್ಸೂಚನೆಗಳು ಮತ್ತು ಒಳನೋಟಗಳನ್ನು ಐತಿಹಾಸಿಕ APMC ಡೇಟಾವನ್ನು ಆಧರಿಸಿದ ಮಷಿನ್ ಲರ್ನಿಂಗ್ ಮಾದರಿಗಳನ್ನು ಬಳಸಿ ರಚಿಸಲಾಗಿದೆ. ಅವು ಮಾಹಿತಿ ಮತ್ತು ಶೈಕ್ಷಣಿಕ ಉದ್ದೇಶಗಳಿಗಾಗಿ ಮಾತ್ರ ಮತ್ತು ಆರ್ಥಿಕ ಸಲಹೆಯಲ್ಲ. ಕೃಷಿ ಮಾರುಕಟ್ಟೆಗಳು ಹೆಚ್ಚು ಅಸ್ಥಿರವಾಗಿರುತ್ತವೆ ಮತ್ತು ಹಠಾತ್ ಬದಲಾವಣೆಗಳಿಗೆ ಒಳಪಟ್ಟಿರುತ್ತವೆ. ಈ ಮುನ್ಸೂಚನೆಗಳ ಆಧಾರದ ಮೇಲೆ ಉಂಟಾದ ಯಾವುದೇ ಆರ್ಥಿಕ ನಷ್ಟಕ್ಕೆ ನಾವು ಜವಾಬ್ದಾರರಾಗಿರುವುದಿಲ್ಲ. ಮಾರಾಟದ ನಿರ್ಧಾರಗಳನ್ನು ತೆಗೆದುಕೊಳ್ಳುವ ಮೊದಲು ಯಾವಾಗಲೂ ನಿಮ್ಮ ಸ್ವಂತ ಸ್ವತಂತ್ರ ತೀರ್ಮಾನವನ್ನು ಬಳಸಿ.",
+    awaitingData: "ಇಂದಿನ ದರಗಳಿಗಾಗಿ ಕಾಯಲಾಗುತ್ತಿದೆ..."
   }
 };
 
@@ -174,8 +176,8 @@ export default function Dashboard() {
         const d = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getFullYear()).slice(2)}`;
         const currentHour = today.getHours();
 
-        // APMC WhatsApp updates usually arrive between 5 PM and 6 PM.
-        if (lastEntry.d !== d && currentHour >= 18) {
+        // APMC WhatsApp updates usually arrive between 3 PM and 6 PM.
+        if (lastEntry.d !== d && currentHour >= 15) {
           fetch('/api/fetch-prices').then(() => {
             fetch('/api/data').then(r => r.json()).then(j => setData(j.data));
           });
@@ -492,6 +494,19 @@ export default function Dashboard() {
                 }}
               />
             </div>
+            
+            {/* Subtle Awaiting Data Indicator */}
+            {data.length > 0 && selectedDate === parseToInputDate(data[data.length - 1].d) && (
+              (() => {
+                const d = new Date();
+                const todayLocalStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+                return selectedDate !== todayLocalStr ? (
+                  <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)', fontStyle: 'italic', marginLeft: '0.5rem', opacity: 0.8 }}>
+                    * {t.awaitingData}
+                  </span>
+                ) : null;
+              })()
+            )}
           </div>
         </div>
         {(() => {
