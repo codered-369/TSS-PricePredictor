@@ -52,10 +52,29 @@ export function predict7(avgs: number[]) {
   if (avgs.length < 3) return Array(7).fill(avgs[avgs.length - 1] || 0);
   const sliceLen = Math.min(30, avgs.length);
   const reg = linReg(avgs.slice(-sliceLen));
+  
+  const last = avgs[avgs.length - 1];
+  const prev = avgs[avgs.length - 2] || last;
+  const pctChange = prev > 0 ? Math.abs((last - prev) / prev) : 0;
+  
+  // Dynamic Alpha: If high volatility (>5% move), react faster to recent price. Else, smooth trending.
+  const alpha = pctChange > 0.05 ? 0.7 : 0.3;
+  const ewmV = ewm(avgs, alpha);
+  const wmaV = wma(avgs, 7);
+
+  // Dynamic Ensemble Weights
+  let w_wma = 0.40, w_reg = 0.35, w_ewm = 0.25;
+  if (pctChange > 0.05) {
+    // Structural break detected (crash/spike). Heavily weigh the fast EWM to avoid lagging.
+    w_wma = 0.10; w_reg = 0.10; w_ewm = 0.80;
+  }
+
   return Array.from({ length: 7 }, (_, i) => {
-    const wmaV = wma(avgs, 7);
-    const ewmV = ewm(avgs, 0.3);
-    return Math.round(wmaV * 0.40 + reg.pred(sliceLen + i) * 0.35 + ewmV * 0.25);
+    // Damped Trend: Prevents linear regression from forecasting absurd numbers by slowly pulling it back to the last known price.
+    const trendDampener = Math.pow(0.85, i); 
+    const regPred = reg.pred(sliceLen + i);
+    const projection = wmaV * w_wma + regPred * w_reg + ewmV * w_ewm;
+    return Math.round(projection * trendDampener + last * (1 - trendDampener));
   });
 }
 
@@ -64,11 +83,30 @@ export function predictStats(avgs: number[], ahead = 1) {
   if (avgs.length < 3) return { pred: avgs.slice(-1)[0] || 0, std: 0, ma7: 0, ma14: 0, slope: 0, conf: 60 };
   const sliceLen = Math.min(30, avgs.length);
   const reg = linReg(avgs.slice(-sliceLen));
+  
+  const last = avgs[avgs.length - 1];
+  const prev = avgs[avgs.length - 2] || last;
+  const pctChange = prev > 0 ? Math.abs((last - prev) / prev) : 0;
+  
+  const alpha = pctChange > 0.05 ? 0.7 : 0.3;
+  const ewmV = ewm(avgs, alpha);
   const wmaV = wma(avgs, 7);
   const smaV = sma(avgs, 14);
-  const ewmV = ewm(avgs, 0.3);
-  const ens = wmaV * 0.40 + reg.pred(sliceLen - 1 + ahead) * 0.35 + ewmV * 0.25;
+
+  let w_wma = 0.40, w_reg = 0.35, w_ewm = 0.25;
+  if (pctChange > 0.05) {
+    w_wma = 0.10; w_reg = 0.10; w_ewm = 0.80;
+  }
+
+  const regPred = reg.pred(sliceLen - 1 + ahead);
+  const projection = wmaV * w_wma + regPred * w_reg + ewmV * w_ewm;
+  const trendDampener = Math.pow(0.85, ahead - 1);
+  const ens = projection * trendDampener + last * (1 - trendDampener);
+  
   const s = stdDev(avgs.slice(-14));
-  const conf = Math.min(95, 68 + Math.floor(avgs.length / 4));
+  // Confidence drops by 20% if there is extreme recent volatility (harder to predict)
+  const volPenalty = pctChange > 0.05 ? 20 : 0;
+  const conf = Math.max(50, Math.min(95, 68 + Math.floor(avgs.length / 4) - volPenalty));
+  
   return { pred: Math.round(ens), std: Math.round(s), ma7: Math.round(wmaV), ma14: Math.round(smaV), slope: reg.slope, conf };
 }
