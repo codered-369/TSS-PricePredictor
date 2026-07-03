@@ -592,7 +592,14 @@ export default function Dashboard() {
           <div className={styles.kpiGrid}>
             <div className={`${styles.kpiCard} glass`}>
               <div className={styles.kpiLabel}>{t.currPrice} ({formattedLatestDate})</div>
-              <div className={styles.kpiValue}>₹{latestAvg.toLocaleString()}</div>
+              <div className={styles.kpiValue}>
+                ₹{latestAvg.toLocaleString()}
+                {(latestAvg - prevAvg) !== 0 && (
+                  <span style={{ fontSize: '1.1rem', marginLeft: '0.5rem', fontWeight: 500, color: (latestAvg - prevAvg) > 0 ? 'var(--accent-green)' : 'var(--accent-red)' }}>
+                    ({(latestAvg - prevAvg) > 0 ? '+' : ''}{(latestAvg - prevAvg).toLocaleString()})
+                  </span>
+                )}
+              </div>
               <div className={`${styles.kpiSub} ${isUp ? styles.up : styles.down}`}>
                 {isUp ? <TrendingUp size={14} style={{ display: 'inline', verticalAlign: 'middle' }} /> : <TrendingDown size={14} style={{ display: 'inline', verticalAlign: 'middle' }} />}
                 {' '}{Math.abs(Number(pctChange))}% {t.vsYest} (₹{prevAvg.toLocaleString()})
