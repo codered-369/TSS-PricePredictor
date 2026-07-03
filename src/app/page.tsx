@@ -340,11 +340,15 @@ export default function Dashboard() {
   let actionType = 'wait';
 
   const numericPctChange = parseFloat(pctChange);
+  const expectedGainPct = (currentDiffToPeak / latestAvg) * 100;
+  const slopePct = (stats.slope / latestAvg) * 100;
 
-  if (currentDiffToPeak > 500) {
+  // Use percentages instead of flat absolute values so it scales across Rashi (50k) and Kempu Gotu (24k)
+  if (expectedGainPct > 1.5) { // If model expects at least a 1.5% jump in the next 7 days
     actionText = t.actionWait.replace('{price}', peakPrice.toLocaleString()).replace('{date}', futureLabels[peakIndex]);
     actionType = 'wait';
-  } else if (stats.slope < -100 || numericPctChange < -5) {
+  } else if (slopePct < -0.3 || numericPctChange < -3) { 
+    // If the 30-day slope is dropping heavily (>0.3% a day) or we just had a sudden crash (>3%)
     actionText = t.actionSell;
     actionType = 'sell';
   } else {
