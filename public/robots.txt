@@ -1,1 +1,5 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://tss-price-predictor.vercel.app/sitemap.xml
 
