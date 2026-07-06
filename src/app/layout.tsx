@@ -13,22 +13,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TSS Arecanut Price Sirsi Today | Daily Market Rates & 7-Day Forecast",
-  description: "Get the exact, 100% accurate daily market prices for TSS Sirsi Arecanut (Rashi, Chali, Kempu Gotu, Pepper). Check live APMC rates and our exclusive AI-powered 7-day price prediction to know exactly when to sell your crop.",
-  keywords: ["TSS Sirsi", "Arecanut price Sirsi today", "Sirsi supari price", "TSS market rate", "Sirsi APMC arecanut", "Sirsi","Adike","Sirsi Adike rate","TSS","Tss","betel nut price Sirsi", "Rashi arecanut price", "Chali kempu price", "Totagars Cooperative Sale Society", "kalumenasu price", "black pepper price Sirsi", "TSS black pepper", "Sirsi adike price", "arecanut prediction"],
+  title: "Arecanut and Pepper Price at TSS Sirsi Today | Live Market Rates & AI Forecast",
+  description: "Check today's exact, 100% accurate Arecanut and Pepper Price at TSS Sirsi market. View live APMC rates, Rashi, Chali, Kempu Gotu, and exclusive AI-powered 7-day price predictions.",
+  keywords: ["Arecanut and Pepper Price at TSS Sirsi", "TSS Sirsi", "Arecanut price Sirsi today", "Sirsi supari price", "TSS market rate", "Sirsi APMC arecanut", "Sirsi Adike rate", "betel nut price Sirsi", "Rashi arecanut price", "Chali kempu price", "Totagars Cooperative Sale Society", "kalumenasu price", "black pepper price Sirsi", "Sirsi adike price", "arecanut prediction"],
+  metadataBase: new URL('https://tss-price-predictor.vercel.app'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
-    title: "TSS Arecanut Price Sirsi | Live Rates & AI Forecast",
-    description: "Check today's true TSS Sirsi Arecanut prices. View 7-day AI predictions for Rashi, Kempu Gotu, Chali, and Pepper to maximize your profits.",
-    type: "website",
+    title: "Arecanut and Pepper Price at TSS Sirsi Today | Live Rates & AI Forecast",
+    description: "Check today's true TSS Sirsi Arecanut and Pepper prices. View 7-day AI predictions for Rashi, Kempu Gotu, Chali, and Pepper to maximize your profits.",
+    type: "article",
     locale: "en_IN",
     siteName: "TSS Sirsi Price Predictor",
+    authors: ["TSS Price Predictor"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TSS Arecanut Price Sirsi Today",
+    title: "Arecanut and Pepper Price at TSS Sirsi Today",
     description: "Daily market rates and AI predictions for Sirsi Arecanut farmers.",
   },
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   manifest: "/manifest.json",
 };
 
