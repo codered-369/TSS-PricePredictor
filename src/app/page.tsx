@@ -1,8 +1,34 @@
 import PredictorClient from './PredictorClient';
 import { getPersistedData } from '@/lib/data';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getPersistedData();
+  let latestDateStr = new Date().toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+  
+  if (data && data.length > 0) {
+    const latest = data[data.length - 1];
+    const [dd, mm, yy] = latest.d.split('-');
+    const d = new Date(`20${yy}-${mm}-${dd}`);
+    latestDateStr = d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-');
+  }
+
+  return {
+    title: `Arecanut and Pepper Price at TSS Sirsi Today | ${latestDateStr} | Live AI Forecast`,
+    description: `Check today's exact, 100% accurate Arecanut and Pepper Price at TSS Sirsi market as of ${latestDateStr}. View live APMC rates, Rashi, Chali, Kempu Gotu, and exclusive AI predictions.`,
+    openGraph: {
+      title: `Arecanut and Pepper Price at TSS Sirsi Today | ${latestDateStr}`,
+      description: `Check today's true TSS Sirsi Arecanut and Pepper prices as of ${latestDateStr}. View 7-day AI predictions for Rashi, Kempu Gotu, Chali, and Pepper.`,
+    },
+    twitter: {
+      title: `Arecanut and Pepper Price at TSS Sirsi Today | ${latestDateStr}`,
+      description: `Daily market rates and AI predictions for Sirsi Arecanut farmers as of ${latestDateStr}.`,
+    }
+  };
+}
 
 export default async function Page() {
   const data = await getPersistedData();
