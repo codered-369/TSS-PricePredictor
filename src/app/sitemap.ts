@@ -13,7 +13,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   if (data && data.length > 0) {
     const latest = data[data.length - 1];
     const [dd, mm, yy] = latest.d.split('-');
-    lastModified = new Date(`20${yy}-${mm}-${dd}T15:00:00Z`); // Assuming data comes in around 3 PM
+    lastModified = new Date(`20${yy}-${mm}-${dd}T18:00:00Z`); // Assuming data comes in around 6 PM
   }
 
   return [

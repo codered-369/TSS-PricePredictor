@@ -188,8 +188,8 @@ export default function Dashboard({ initialData }: { initialData: any[] }) {
         const d = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getFullYear()).slice(2)}`;
         const currentHour = today.getHours();
 
-        // APMC WhatsApp updates usually arrive between 3 PM and 6 PM.
-        if (lastEntry.d !== d && currentHour >= 15) {
+        // APMC WhatsApp updates usually arrive around 5 PM, so we fetch after 6 PM.
+        if (lastEntry.d !== d && currentHour >= 18) {
           fetch('/api/fetch-prices').then(() => {
             fetch('/api/data').then(r => r.json()).then(j => setData(j.data));
           });
