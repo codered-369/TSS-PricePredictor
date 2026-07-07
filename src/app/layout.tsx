@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Arecanut and Pepper Price at TSS Sirsi Today | Live Market Rates & AI Forecast",
   description: "Check today's exact, 100% accurate Arecanut and Pepper Price at TSS Sirsi market. View live APMC rates, Rashi, Chali, Kempu Gotu, and exclusive AI-powered 7-day price predictions.",
-  keywords: ["Arecanut and Pepper Price at TSS Sirsi", "TSS Sirsi", "Arecanut price Sirsi today", "Sirsi supari price", "TSS market rate", "Sirsi APMC arecanut", "Sirsi Adike rate", "betel nut price Sirsi", "Rashi arecanut price", "Chali kempu price", "Totagars Cooperative Sale Society", "kalumenasu price", "black pepper price Sirsi", "Sirsi adike price", "arecanut prediction"],
+  keywords: ["Arecanut and Pepper Price at TSS Sirsi", "TSS Sirsi", "Arecanut price Sirsi today", "Sirsi supari price", "TSS market rate", "Sirsi APMC arecanut", "Sirsi Adike rate", "betel nut price Sirsi", "Rashi arecanut price", "Chali kempu price", "Totagars Cooperative Sale Society", "kalumenasu price", "black pepper price Sirsi", "Sirsi adike price", "arecanut prediction", "Sirsi", "Adike", "TSS", "TSS black pepper"],
   metadataBase: new URL('https://tss-price-predictor.vercel.app'),
   alternates: {
     canonical: '/',
