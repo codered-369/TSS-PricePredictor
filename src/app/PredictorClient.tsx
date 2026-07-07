@@ -188,8 +188,16 @@ export default function Dashboard({ initialData }: { initialData: any[] }) {
         const d = `${String(today.getDate()).padStart(2, '0')}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getFullYear()).slice(2)}`;
         const currentHour = today.getHours();
 
-        // APMC WhatsApp updates usually arrive around 5 PM, so we fetch after 6 PM.
-        if (lastEntry.d !== d && currentHour >= 18) {
+        // Parse lastEntry date "DD-MM-YY"
+        const [lastDD, lastMM, lastYY] = lastEntry.d.split('-');
+        const lastDate = new Date(`20${lastYY}-${lastMM}-${lastDD}`);
+        
+        // Calculate difference in days
+        const diffTime = Math.abs(today.getTime() - lastDate.getTime());
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+        // Only fall back to Napanta scraper if we are missing more than 7 days of pure WhatsApp data
+        if (lastEntry.d !== d && currentHour >= 18 && diffDays >= 7) {
           fetch('/api/fetch-prices').then(() => {
             fetch('/api/data').then(r => r.json()).then(j => setData(j.data));
           });
