@@ -228,7 +228,9 @@ export default function Dashboard({ initialData }: { initialData: any[] }) {
     const handleBeforeInstallPrompt = (e: any) => {
       e.preventDefault();
       setDeferredPrompt(e);
-      if (!localStorage.getItem('tss_install_dismissed')) {
+      
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+      if (isMobile && !localStorage.getItem('tss_install_dismissed')) {
         setShowInstallPopup(true);
       }
     };
