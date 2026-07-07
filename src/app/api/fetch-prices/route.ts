@@ -57,10 +57,10 @@ export async function GET() {
     const lastDateObj = parseDate(last.d);
     let currentDateObj = new Date(lastDateObj);
     currentDateObj.setDate(currentDateObj.getDate() + 1); // Start from the day after the last entry
-    
+
     // Normalize today to midnight for comparison
     const todayMidnight = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    
+
     let addedCount = 0;
     let prevData = { ...last };
 
@@ -68,22 +68,22 @@ export async function GET() {
     while (currentDateObj <= todayMidnight) {
       const dStr = formatDate(currentDateObj);
       const isToday = dStr === todayStr;
-      
+
       // If it's today and we successfully scraped real data, use it! Otherwise, simulate/interpolate.
       const newRow = {
         d: dStr,
         rn: (isToday && rData?.min) ? rData.min : fluctuate(prevData.rn),
         rx: (isToday && rData?.max) ? rData.max : fluctuate(prevData.rx),
         ra: (isToday && rData?.avg) ? rData.avg : fluctuate(prevData.ra),
-        
+
         kn: (isToday && kData?.min) ? kData.min : fluctuate(prevData.kn),
         kx: (isToday && kData?.max) ? kData.max : fluctuate(prevData.kx),
         ka: (isToday && kData?.avg) ? kData.avg : fluctuate(prevData.ka),
-        
+
         cn: (isToday && cData?.min) ? cData.min : fluctuate(prevData.cn),
         cx: (isToday && cData?.max) ? cData.max : fluctuate(prevData.cx),
         ca: (isToday && cData?.avg) ? cData.avg : fluctuate(prevData.ca),
-        
+
         pn: (isToday && pData?.min) ? pData.min : fluctuate(prevData.pn),
         px: (isToday && pData?.max) ? pData.max : fluctuate(prevData.px),
         pa: (isToday && pData?.avg) ? pData.avg : fluctuate(prevData.pa),
@@ -92,16 +92,16 @@ export async function GET() {
       data.push(newRow);
       prevData = newRow;
       addedCount++;
-      
+
       currentDateObj.setDate(currentDateObj.getDate() + 1);
     }
 
     await savePersistedData(data);
 
-    return NextResponse.json({ 
-      success: true, 
-      message: `Successfully caught up! Added ${addedCount} missing days of data.`, 
-      latestData: prevData 
+    return NextResponse.json({
+      success: true,
+      message: `Successfully caught up! Added ${addedCount} missing days of data.`,
+      latestData: prevData
     });
   } catch (error: any) {
     return NextResponse.json({ success: false, error: error.message }, { status: 500 });
