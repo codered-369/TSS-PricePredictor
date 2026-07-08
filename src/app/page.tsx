@@ -47,6 +47,11 @@ export default async function Page() {
       "url": "https://tss-price-predictor.vercel.app/",
       "sameAs": "https://tss-price-predictor.vercel.app/",
       "dateModified": isoDate,
+      "creator": {
+        "@type": "Organization",
+        "name": "TSS Sirsi Smart Price Predictor"
+      },
+      "license": "https://creativecommons.org/licenses/by/4.0/",
       "variableMeasured": [
         {
           "@type": "PropertyValue",
