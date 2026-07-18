@@ -76,10 +76,10 @@ export default async function Page() {
     formattedDate = dObj.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, '-');
 
     // Calculate ML stats for SSR content & Schemas
-    const rashiAvgs = data.map(d => d.ra);
-    const chaliAvgs = data.map(d => d.ca);
-    const kempuAvgs = data.map(d => d.ka);
-    const pepperAvgs = data.map(d => d.pa);
+    const rashiAvgs = data.map((d: any) => d.ra);
+    const chaliAvgs = data.map((d: any) => d.ca);
+    const kempuAvgs = data.map((d: any) => d.ka);
+    const pepperAvgs = data.map((d: any) => d.pa);
 
     const rashiStats = predictStats(rashiAvgs, 1);
     const chaliStats = predictStats(chaliAvgs, 1);
