@@ -125,7 +125,7 @@ export default function ServerSeoContent({
 
       {/* Indexable Frequently Asked Questions (FAQs) */}
       <div>
-        <h2 style={{ fontSize: '1.4rem', fontWeight 700, marginBottom: '1.25rem' }}>
+        <h2 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '1.25rem' }}>
           ❓ Frequently Asked Questions (FAQ) - TSS Sirsi Market
         </h2>
 
