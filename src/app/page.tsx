@@ -214,15 +214,16 @@ export default async function Page() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
         />
       )}
-      <PredictorClient initialData={data} />
-      <ServerSeoContent
-        latest={latestItem}
-        formattedDate={formattedDate}
-        rashiForecast={rashiForecast}
-        chaliForecast={chaliForecast}
-        kempuForecast={kempuForecast}
-        pepperForecast={pepperForecast}
-      />
+      <PredictorClient initialData={data}>
+        <ServerSeoContent
+          latest={latestItem}
+          formattedDate={formattedDate}
+          rashiForecast={rashiForecast}
+          chaliForecast={chaliForecast}
+          kempuForecast={kempuForecast}
+          pepperForecast={pepperForecast}
+        />
+      </PredictorClient>
     </>
   );
 }

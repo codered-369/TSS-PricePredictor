@@ -113,7 +113,7 @@ const ITEMS = {
   P: { color: '#3b82f6', avgKey: 'pa', minKey: 'pn', maxKey: 'px', emoji: '🌶️' },
 };
 
-export default function Dashboard({ initialData }: { initialData: any[] }) {
+export default function Dashboard({ initialData, children }: { initialData: any[]; children?: React.ReactNode }) {
   const [data, setData] = useState<any[]>(initialData || []);
   const [activeItem, setActiveItem] = useState('R');
   const [loading, setLoading] = useState(false);
@@ -735,6 +735,8 @@ export default function Dashboard({ initialData }: { initialData: any[] }) {
           </div>
         </div>
       )}
+
+      {children}
 
       {/* Footer */}
       <footer style={{ marginTop: '3rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '2rem 0', borderTop: '1px solid var(--glass-border)', color: 'var(--text-muted)', gap: '1.25rem' }}>
