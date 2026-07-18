@@ -1,5 +1,16 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { redis } from '@/lib/data';
+
+// Helper to notify search engines asynchronously of new market data
+async function notifySearchEngines() {
+  try {
+    const sitemapUrl = encodeURIComponent('https://tss-price-predictor.vercel.app/sitemap.xml');
+    await fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`, { method: 'GET' }).catch(() => {});
+  } catch (err) {
+    console.warn('Sitemap ping skipped:', err);
+  }
+}
 
 // Helper function to extract prices from raw text
 function parseWhatsAppMessage(text: string) {
@@ -95,9 +106,16 @@ export async function POST(req: Request) {
       return parseD(a.d) - parseD(b.d);
     });
 
-    // 4. Save back to Redis
+    // 4. Save back to Redis & trigger cache revalidation & search engine ping
     if (redis) {
       await redis.set('tss_price_data', JSON.stringify(existingData));
+    }
+
+    try {
+      revalidatePath('/');
+      notifySearchEngines();
+    } catch (revalErr) {
+      console.warn('Revalidation error:', revalErr);
     }
 
     // 5. Reply to WhatsApp confirming success!

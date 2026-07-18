@@ -1,5 +1,15 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { getPersistedData, savePersistedData } from '@/lib/data';
+
+async function notifySearchEngines() {
+  try {
+    const sitemapUrl = encodeURIComponent('https://tss-price-predictor.vercel.app/sitemap.xml');
+    await fetch(`https://www.google.com/ping?sitemap=${sitemapUrl}`, { method: 'GET' }).catch(() => {});
+  } catch (err) {
+    console.warn('Sitemap ping skipped:', err);
+  }
+}
 
 export async function POST(req: Request) {
   try {
@@ -31,6 +41,13 @@ export async function POST(req: Request) {
     });
 
     await savePersistedData(data);
+
+    try {
+      revalidatePath('/');
+      notifySearchEngines();
+    } catch (revalErr) {
+      console.warn('Revalidation error:', revalErr);
+    }
     
     return NextResponse.json({ success: true, message: 'Data saved and model retrained successfully!' });
   } catch (error: any) {
