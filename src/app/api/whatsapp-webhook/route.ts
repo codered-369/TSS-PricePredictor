@@ -89,22 +89,34 @@ export async function POST(req: Request) {
       if (data && Array.isArray(data)) existingData = data;
     }
 
+    // Helper to parse dates for sorting and comparison
+    const parseD = (s: string) => {
+      const [dd, mm, yy] = s.split('-');
+      return new Date(`20${yy}-${mm}-${dd}`).getTime();
+    };
+
+    // Sort existing data chronologically
+    existingData.sort((a, b) => parseD(a.d) - parseD(b.d));
+
+    // Fallback missing (0) prices to the most recent previous day's prices
+    const newEntryTime = parseD(newEntry.d);
+    const prevEntry = existingData.slice().reverse().find(d => parseD(d.d) < newEntryTime);
+
+    if (prevEntry) {
+      if (newEntry.rn === 0 && newEntry.rx === 0) { newEntry.rn = prevEntry.rn; newEntry.rx = prevEntry.rx; newEntry.ra = prevEntry.ra; }
+      if (newEntry.kn === 0 && newEntry.kx === 0) { newEntry.kn = prevEntry.kn; newEntry.kx = prevEntry.kx; newEntry.ka = prevEntry.ka; }
+      if (newEntry.cn === 0 && newEntry.cx === 0) { newEntry.cn = prevEntry.cn; newEntry.cx = prevEntry.cx; newEntry.ca = prevEntry.ca; }
+      if (newEntry.pn === 0 && newEntry.px === 0) { newEntry.pn = prevEntry.pn; newEntry.px = prevEntry.px; newEntry.pa = prevEntry.pa; }
+    }
+
     // 3. Update or append
     const index = existingData.findIndex(d => d.d === newEntry.d);
     if (index >= 0) {
       existingData[index] = newEntry; // Overwrite if date exists
     } else {
       existingData.push(newEntry); // Append if new date
+      existingData.sort((a, b) => parseD(a.d) - parseD(b.d)); // Re-sort if appended
     }
-
-    // Sort to keep dates chronological
-    existingData.sort((a, b) => {
-      const parseD = (s: string) => {
-        const [dd, mm, yy] = s.split('-');
-        return new Date(`20${yy}-${mm}-${dd}`).getTime();
-      };
-      return parseD(a.d) - parseD(b.d);
-    });
 
     // 4. Save back to Redis & trigger cache revalidation & search engine ping
     if (redis) {
