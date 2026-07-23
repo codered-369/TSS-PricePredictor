@@ -648,7 +648,10 @@ export default function Dashboard({ initialData, children }: { initialData: any[
                 const change = price - latestAvg;
                 return (
                   <div key={i} className={`${styles.forecastDay} ${isPeak ? styles.peak : ''}`}>
-                    <div className={styles.fDayName}>{futureLabels[i].split(',')[0]}</div>
+                    {(() => {
+                      const [dayStr, monthStr, dateStr] = futureLabels[i].replace(',', '').split(' ');
+                      return <div className={styles.fDayName}>{dayStr.toUpperCase()} {dateStr}</div>;
+                    })()}
                     <div className={styles.fPrice}>₹{price.toLocaleString()}</div>
                     <div className={`${styles.fTrend} ${change >= 0 ? styles.up : styles.down}`}>
                       {change >= 0 ? '+' : ''}{change}
