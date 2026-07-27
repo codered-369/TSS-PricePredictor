@@ -70,7 +70,8 @@ const TRANSLATIONS = {
     valueToday: "Value if Sold Today:",
     valueAtPeak: "Estimated Value at AI Peak:",
     extraProfit: "Estimated Gain by Waiting:",
-    sellImmediateNotice: "Model recommends selling immediately or holding cautiously."
+    sellImmediateNotice: "Model recommends selling immediately or holding cautiously.",
+    sundayHoliday: "Sunday Holiday: TSS APMC Market is closed today. Displaying Saturday's final closing market rates."
   },
   kn: {
     title: "TSS ಶಿರಸಿ ಸ್ಮಾರ್ಟ್ ಭವಿಷ್ಯ",
@@ -122,7 +123,8 @@ const TRANSLATIONS = {
     valueToday: "ಇಂದು ಮಾರಾಟ ಮಾಡಿದರೆ ಬೆಲೆ:",
     valueAtPeak: "AI ಗರಿಷ್ಠ ದಿನದಂದು ನಿರೀಕ್ಷಿತ ಬೆಲೆ:",
     extraProfit: "ಕಾಯುವುದರಿಂದ ಆಗಲಿರುವ ಹೆಚ್ಚುವರಿ ಲಾಭ:",
-    sellImmediateNotice: "ಸಂಭಾವ್ಯ ನಷ್ಟವನ್ನು ತಪ್ಪಿಸಲು ಕೂಡಲೇ ಎಚ್ಚರಿಕೆಯಿಂದ ನಿರ್ಣಯಿಸಿ."
+    sellImmediateNotice: "ಸಂಭಾವ್ಯ ನಷ್ಟವನ್ನು ತಪ್ಪಿಸಲು ಕೂಡಲೇ ಎಚ್ಚರಿಕೆಯಿಂದ ನಿರ್ಣಯಿಸಿ.",
+    sundayHoliday: "ರವಿವಾರದ ರಜೆ: ಇಂದು ಶಿರಸಿ ಮಾರುಕಟ್ಟೆ ಮುಚ್ಚಲ್ಪಟ್ಟಿದೆ. ಶನಿವಾರದ ಅಂತಿಮ ದರಗಳನ್ನು ಪ್ರದರ್ಶಿಸಲಾಗುತ್ತಿದೆ."
   }
 };
 
@@ -600,6 +602,16 @@ export default function Dashboard({ initialData, children }: { initialData: any[
           );
         })()}
       </div>
+
+      {/* Sunday Market Holiday Banner */}
+      {new Date().getDay() === 0 && (
+        <div style={{ background: 'rgba(245, 158, 11, 0.15)', border: '1px solid rgba(245, 158, 11, 0.4)', padding: '1rem', borderRadius: '12px', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#f59e0b', fontWeight: 600 }}>
+          <span style={{ fontSize: '1.5rem' }}>🌴</span>
+          <div>
+            <div style={{ fontSize: '0.95rem', color: 'var(--text-main)' }}>{t.sundayHoliday}</div>
+          </div>
+        </div>
+      )}
 
       {/* Actionable Banner */}
       <div className={`${styles.actionBanner} ${styles[actionType] || ''}`}>
